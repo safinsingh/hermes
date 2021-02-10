@@ -1,0 +1,9 @@
+services:
+  pgsql:
+    image: postgres
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: hermes
+    ports:
+      - '5432:5432'

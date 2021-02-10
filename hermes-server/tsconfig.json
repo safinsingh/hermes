@@ -1,10 +1,14 @@
 {
 	"extends": "../tsconfig.json",
 	"compilerOptions": {
-		"rootDir": "src/",
+		"target": "es2018",
+		"rootDir": "./",
 		"outDir": "dist/",
-		"declaration": false
+		"declaration": false,
+		"experimentalDecorators": true,
+		"emitDecoratorMetadata": true,
+		"noUnusedParameters": false
 	},
-	"include": ["src/**/*.ts"],
+	"include": ["src/**/*.ts", "prisma/**/*.ts"],
 	"exclude": ["dist/*"]
 }

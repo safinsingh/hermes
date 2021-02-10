@@ -1,0 +1,59 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator typegraphql {
+  provider = "typegraphql-prisma"
+  output   = "../prisma/generated/type-graphql"
+}
+
+/// Individual user
+model User {
+  /// User's ID
+  id       Int       @id @default(autoincrement())
+  /// User's email address (unique)
+  email    String    @unique
+  /// User's nickname or preferred name
+  name     String
+  /// User's password (hashed with Argon2i)
+  password String
+  /// List of all messages a user has sent
+  messages Message[]
+  /// List of all groups a user is part of
+  groups   Group[]
+}
+
+/// Overarching message model
+model Message {
+  /// Message ID
+  id        Int      @id @default(autoincrement())
+  /// Message content
+  text      String
+  /// Group in which the message was sent
+  group     Group    @relation(fields: [groupId], references: [id])
+  /// Unique group identifier
+  groupId   Int
+  /// User who sent the message
+  user      User     @relation(fields: [userId], references: [id])
+  /// Unique user identifier
+  userId    Int
+  /// Time at which message was sent
+  timestamp DateTime @default(now())
+}
+
+/// Overarching group model
+model Group {
+  /// Group ID
+  id       Int       @id @default(autoincrement())
+  /// Group name
+  name     String?
+  /// Users within the group
+  users    User[]
+  /// Messages sent within the group
+  messages Message[]
+}
