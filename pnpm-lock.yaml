@@ -11,15 +11,15 @@ importers:
       husky: 5.0.9
       prettier: 2.2.1
     specifiers:
-      '@types/eslint': ^7.2.6
-      '@types/prettier': ^2.2.0
-      eslint: ^7.19.0
-      eslint-config-canonical: ^25.8.15
-      eslint-config-prettier: ^7.2.0
-      eslint-import-resolver-typescript: ^2.3.0
-      eslint-plugin-prettier: ^3.3.1
-      husky: ^5.0.9
-      prettier: ^2.2.1
+      '@types/eslint': 7.2.6
+      '@types/prettier': 2.2.0
+      eslint: 7.19.0
+      eslint-config-canonical: 25.8.15
+      eslint-config-prettier: 7.2.0
+      eslint-import-resolver-typescript: 2.3.0
+      eslint-plugin-prettier: 3.3.1
+      husky: 5.0.9
+      prettier: 2.2.1
   hermes-server:
     dependencies:
       '@prisma/client': 2.16.1_prisma@2.16.1
@@ -34,24 +34,24 @@ importers:
       '@types/graphql-fields': 1.3.3
       prisma: 2.16.1
       rimraf: 3.0.2
-      ts-node: 9.1.1_typescript@4.1.4
+      ts-node: 9.1.1_typescript@4.1.5
       typegraphql-prisma: 0.10.3_992ede084bb411cd9c731b6a51108666
-      typescript: 4.1.4
+      typescript: 4.1.5
     specifiers:
-      '@prisma/client': ^2.16.1
-      '@types/graphql-fields': ^1.3.3
-      apollo-server: ^2.20.0
-      argon2: ^0.27.1
-      graphql: ^15.5.0
-      graphql-fields: ^2.0.3
-      graphql-type-json: ^0.3.2
-      prisma: ^2.16.1
-      reflect-metadata: ^0.1.13
-      rimraf: ^3.0.2
-      ts-node: ^9.1.1
-      type-graphql: ^1.1.1
-      typegraphql-prisma: ^0.10.3
-      typescript: ^4.1.4
+      '@prisma/client': 2.16.1
+      '@types/graphql-fields': 1.3.3
+      apollo-server: 2.20.0
+      argon2: 0.27.1
+      graphql: 15.5.0
+      graphql-fields: 2.0.3
+      graphql-type-json: 0.3.2
+      prisma: 2.16.1
+      reflect-metadata: 0.1.13
+      rimraf: 3.0.2
+      ts-node: 9.1.1
+      type-graphql: 1.1.1
+      typegraphql-prisma: 0.10.3
+      typescript: 4.1.5
 lockfileVersion: 5.2
 packages:
   /@apollo/protobufjs/1.0.5:
@@ -423,7 +423,7 @@ packages:
       is-negated-glob: 1.0.0
       mkdirp: 1.0.4
       multimatch: 5.0.0
-      typescript: 4.1.4
+      typescript: 4.1.5
     dev: true
     resolution:
       integrity: sha512-nlFunSKAsFWI0Ol/uPxJcpVqXxTGNuaWXTmoQDhcnwj1UM4QmBSUVWzqoQ0OzUlqo4sV1gobfFBkMHuZVemMAQ==
@@ -461,7 +461,7 @@ packages:
       integrity: sha512-FK4U5Qyn7/Sc5ih233OuHO0qAkOpEcD/eG6584yEiLKizTFRny86qHLe/rej3HFQrkBuUjF4whFliAdODbVN/w==
   /@types/cors/2.8.8:
     dependencies:
-      '@types/express': 4.17.7
+      '@types/express': 4.17.11
     dev: false
     resolution:
       integrity: sha512-fO3gf3DxU2Trcbr75O7obVndW/X5k8rJNZkLXlQWStTHhP71PkRqjwPIEI0yMnJdg9R9OasjU+Bsr+Hr1xy/0w==
@@ -4771,14 +4771,14 @@ packages:
     dev: true
     resolution:
       integrity: sha512-sei4u651MBenr27sD6qLDXN3gZ4thiX71E3qV7SuVtDas0uvK2LtgZkIYUf9DKm/fLJ6AB/+yhRJ1vpEBJgy7Q==
-  /ts-node/9.1.1_typescript@4.1.4:
+  /ts-node/9.1.1_typescript@4.1.5:
     dependencies:
       arg: 4.1.3
       create-require: 1.1.1
       diff: 4.0.2
       make-error: 1.3.6
       source-map-support: 0.5.19
-      typescript: 4.1.4
+      typescript: 4.1.5
       yn: 3.1.1
     dev: true
     engines:
@@ -4902,13 +4902,13 @@ packages:
       type-graphql: ^1.1.1
     resolution:
       integrity: sha512-24znYgpBfsz8QDFBn6/XlstXDyXElkcY9y/QmQLUY1EDZmMx2vFTzs++28qhTKWTA3CdnQav8Fib9Hh11AvTdw==
-  /typescript/4.1.4:
+  /typescript/4.1.5:
     dev: true
     engines:
       node: '>=4.2.0'
     hasBin: true
     resolution:
-      integrity: sha512-+Uru0t8qIRgjuCpiSPpfGuhHecMllk5Zsazj5LZvVsEStEjmIRRBZe+jHjGQvsgS7M1wONy2PQXd67EMyV6acg==
+      integrity: sha512-6OSu9PTIzmn9TCDiovULTnET6BgXtDYL4Gg4szY+cGsc3JP1dQL8qvE8kShTRx1NIw4Q9IBHlwODjkjWEtMUyA==
   /unc-path-regex/0.1.2:
     dev: true
     engines:
