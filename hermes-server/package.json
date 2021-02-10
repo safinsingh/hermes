@@ -20,7 +20,7 @@
 		"url": "https://github.com/safinsingh/hermes"
 	},
 	"scripts": {
-		"build:prisma": "tsc",
+		"build": "rimraf ./dist && tsc",
 		"dev": "ts-node src/index.ts",
 		"generate": "SKIP_PRISMA_VERSION_CHECK=true prisma generate",
 		"migrate": "pnpm generate && prisma migrate dev --preview-feature"
@@ -28,6 +28,7 @@
 	"devDependencies": {
 		"@types/graphql-fields": "^1.3.3",
 		"prisma": "^2.16.1",
+		"rimraf": "^3.0.2",
 		"ts-node": "^9.1.1",
 		"typegraphql-prisma": "^0.10.3",
 		"typescript": "^4.1.4"
