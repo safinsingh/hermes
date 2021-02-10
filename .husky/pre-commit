@@ -1,0 +1,51 @@
+#!/bin/sh
+
+# printing utils
+fail() {
+	printf "\033[1m\033[31m[ FAIL ]\033[0m %s\n" "$*"
+}
+
+info() {
+	printf "\033[1m\033[36m[ INFO ]\033[0m %s\n" "$*"
+}
+
+die() {
+	fail "$*"
+	exit 1
+}
+
+# assert that the pnpm command exists
+pnpm_installed() {
+	command -v pnpm >/dev/null 2>&1
+}
+
+# assume that pnpm not being installed
+# is a result of nvm not being sourced
+pnpm_installed || {
+	NVM="${NVM_DIR:-"$HOME/.nvm"}/nvm.sh"
+
+	# shellcheck disable=SC2015
+	[ -f "$NVM" ] && . "$NVM" ||
+		die "Please install \`nvm\` and/or set \`NVM_DIR\` correctly!"
+}
+
+# ensure that pnpm was found
+pnpm_installed || {
+	die "\`pnpm\` has not been installed globally, please do so!"
+}
+: pnpm exists
+
+# invoke husky git hook helper
+. "$(dirname "$0")/_/husky.sh"
+
+# begin repository checks concurrently
+{
+	info "Running \`fmt\` check..."
+	exec pnpm run fmt:ci >/dev/null
+} &
+{
+	info "Running \`lint\` check..."
+	exec pnpm run lint:ci >/dev/null
+} &
+
+wait && info "Done!"

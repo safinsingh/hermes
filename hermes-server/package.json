@@ -1,0 +1,30 @@
+{
+	"name": "hermes-server",
+	"version": "1.0.0",
+	"description": "hermes' backend",
+	"private": true,
+	"keywords": [
+		"graphql",
+		"websocket"
+	],
+	"main": "dist/index.js",
+	"homepage": "https://github.com/safinsingh/hermes",
+	"license": "MPL-2.0",
+	"author": {
+		"name": "Safin Singh",
+		"email": "safinsingh.dev@gmail.com",
+		"url": "https://safin.dev"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/safinsingh/hermes"
+	},
+	"scripts": {
+		"build": "tsc",
+		"dev": "ts-node src/index.ts"
+	},
+	"devDependencies": {
+		"ts-node": "^9.1.1",
+		"typescript": "^4.1.4"
+	}
+}
