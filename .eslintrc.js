@@ -40,6 +40,8 @@ module.exports = {
 	rules: {
 		'@typescript-eslint/explicit-module-boundary-types': 'off',
 		'@typescript-eslint/no-confusing-void-expression': 'off',
+		// FIXME
+		'import/no-unresolved': 'off',
 		'no-console': 'off',
 		'node/no-missing-import': 'off',
 		'node/no-process-env': 'off'
