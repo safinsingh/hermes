@@ -15,11 +15,10 @@
 		"allowSyntheticDefaultImports": true,
 		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true,
-		"rootDir": "src/",
-		"outDir": "dist/",
 		"noImplicitAny": true,
 		"noImplicitThis": true,
-		"noUnusedParameters": true
+		"noUnusedParameters": true,
+		"noEmit": true
 	},
 	"include": ["**/*.ts"],
 	"exclude": ["node_modules"]

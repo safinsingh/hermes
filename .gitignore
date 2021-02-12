@@ -1,5 +1,6 @@
-**/node_modules/**
-**/dist/**
-**/bin/**
-**/build/**
+**/node_modules
+**/dist
+**/bin
+**/build
 **/*.tsbuildinfo
+**/.env

@@ -23,6 +23,14 @@ module.exports = {
 			rules: {
 				'filenames/match-regex': 'off'
 			}
+		},
+		{
+			files: ['./hermes-server/src/resolvers/*'],
+			rules: {
+				'@typescript-eslint/no-unused-vars': 'off',
+				'class-methods-use-this': 'off',
+				'fp/no-class': 'off'
+			}
 		}
 	],
 	parserOptions: {
@@ -31,7 +39,14 @@ module.exports = {
 	root: true,
 	rules: {
 		'@typescript-eslint/explicit-module-boundary-types': 'off',
+		'@typescript-eslint/no-confusing-void-expression': 'off',
 		'no-console': 'off',
-		'node/no-missing-import': 'off'
+		'node/no-missing-import': 'off',
+		'node/no-process-env': 'off'
+	},
+	settings: {
+		'import/resolver': {
+			typescript: {}
+		}
 	}
 }
