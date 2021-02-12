@@ -31,7 +31,7 @@
 		"@types/eslint": "7.2.6",
 		"@types/prettier": "2.2.0",
 		"eslint": "7.19.0",
-		"eslint-config-canonical": "25.8.15",
+		"eslint-config-canonical": "25.8.17",
 		"eslint-config-prettier": "7.2.0",
 		"eslint-import-resolver-typescript": "2.3.0",
 		"eslint-plugin-prettier": "3.3.1",
