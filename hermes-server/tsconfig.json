@@ -13,7 +13,8 @@
 			"@generated/type-graphql": ["./prisma/generated/type-graphql"],
 			"~/*": ["./src/*"]
 		},
-		"noEmit": false
+		"noEmit": false,
+		"typeRoots": ["./@types", "./node_modules/@types"]
 	},
 	"include": ["src/**/*.ts", "prisma/**/*.ts"],
 	"exclude": ["dist/**"]

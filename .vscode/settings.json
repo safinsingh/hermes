@@ -3,7 +3,8 @@
 		"source.fixAll.eslint": true
 	},
 	"files.associations": {
-		".huskyrc": "json"
+		".huskyrc": "json",
+		".markdownlintrc": "json"
 	},
 	"[json]": {
 		"editor.defaultFormatter": "esbenp.prettier-vscode"

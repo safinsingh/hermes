@@ -5,5 +5,4 @@ export type Context = {
 	prisma: PrismaClient
 	req: Request
 	res: Response
-	userID: string
 }

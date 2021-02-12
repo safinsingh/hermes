@@ -1,4 +1,3 @@
-/* eslint-disable import/no-unassigned-import */
 import 'reflect-metadata'
 
 import { join } from 'path'
@@ -6,14 +5,14 @@ import { ApolloServer } from 'apollo-server-express'
 import cookieParser from 'cookie-parser'
 import express from 'express'
 import { buildSchema } from 'type-graphql'
-import { authChecker, jwtVerify } from '~/auth'
-import { prisma, port } from '~/config'
+import { authChecker, jwtVerify } from './auth'
+import { prisma, port } from './config'
 import {
 	FindManyGroupResolver,
 	LoginResolver,
 	SignUpResolver
-} from '~/resolvers'
-import type { Context } from '~/types'
+} from './resolvers'
+import type { Context } from './types'
 
 const main = async () => {
 	const schema = await buildSchema({
@@ -24,13 +23,7 @@ const main = async () => {
 	})
 
 	const server = new ApolloServer({
-		context: ({ req, res }): Context => ({
-			prisma,
-			req,
-			res,
-			// @ts-expect-error: userID is inserted by my middleware
-			userID: req.userID
-		}),
+		context: ({ req, res }): Context => ({ prisma, req, res }),
 		playground: true,
 		schema
 	})

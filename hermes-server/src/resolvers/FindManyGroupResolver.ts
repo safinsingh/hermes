@@ -1,16 +1,15 @@
-import { UserWhereUniqueInput, Group, User } from '@generated/type-graphql'
 import type { Prisma } from '@prisma/client'
 import { ApolloError } from 'apollo-server-express'
-import { Arg, Query, Resolver, Ctx, Authorized } from 'type-graphql'
-import { Context } from '~/types'
+import { Query, Resolver, Ctx, Authorized } from 'type-graphql'
+import { Group, User } from '../type-graphql-gen'
+import { Context } from '../types'
 
 @Resolver((of) => User)
 export default class FindManyGroupResolver {
 	@Authorized()
 	@Query((returns) => [Group])
 	public async groups(
-		@Ctx() { prisma }: Context,
-		@Arg('user') user: UserWhereUniqueInput
+		@Ctx() { prisma, req }: Context
 	): Promise<
 		Array<
 			Prisma.GroupGetPayload<{
@@ -28,11 +27,11 @@ export default class FindManyGroupResolver {
 						id: true,
 						name: true
 					}
-				},
-				id: true,
-				name: true
+				}
 			},
-			where: user
+			where: {
+				id: req.userID
+			}
 		})
 
 		if (!userResolved)

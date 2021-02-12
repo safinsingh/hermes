@@ -31,6 +31,19 @@ module.exports = {
 				'class-methods-use-this': 'off',
 				'fp/no-class': 'off'
 			}
+		},
+		{
+			files: ['*.d.ts'],
+			rules: {
+				'@typescript-eslint/consistent-type-definitions': 'off',
+				'import/unambiguous': 'off'
+			}
+		},
+		{
+			files: ['./hermes-server/src/index.ts'],
+			rules: {
+				'import/no-unassigned-import': 'off'
+			}
 		}
 	],
 	parserOptions: {
@@ -40,11 +53,11 @@ module.exports = {
 	rules: {
 		'@typescript-eslint/explicit-module-boundary-types': 'off',
 		'@typescript-eslint/no-confusing-void-expression': 'off',
-		// FIXME
-		'import/no-unresolved': 'off',
+		'newline-before-return': 'off',
 		'no-console': 'off',
 		'node/no-missing-import': 'off',
-		'node/no-process-env': 'off'
+		'node/no-process-env': 'off',
+		'unicorn/prevent-abbreviations': 'off'
 	},
 	settings: {
 		'import/resolver': {

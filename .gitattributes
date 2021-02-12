@@ -1,0 +1,2 @@
+*.graphql linguist-detectable=true
+* text=auto eol=lf

@@ -1,15 +1,15 @@
-import { User } from '@generated/type-graphql'
 import * as argon2 from 'argon2'
 import { Arg, Mutation, Resolver, Ctx } from 'type-graphql'
-import { createTokens } from '~/auth'
-import { argonSecret } from '~/config'
-import { Context } from '~/types'
+import { applyTokens } from '../auth'
+import { argonSecret } from '../config'
+import { User } from '../type-graphql-gen'
+import { Context } from '../types'
 
 @Resolver((of) => User)
 export default class SignUpResolver {
 	@Mutation((returns) => User)
 	public async signUp(
-		@Ctx() { prisma, res }: Context,
+		@Ctx() { prisma, req, res }: Context,
 		@Arg('email') email: string,
 		@Arg('password') password: string
 	): Promise<User> {
@@ -17,19 +17,11 @@ export default class SignUpResolver {
 			data: {
 				email,
 				name: email,
-				password: await argon2.hash(password, { secret: argonSecret })
+				password: await argon2.hash(password, { salt: argonSecret })
 			}
 		})
 
-		const { accessToken, refreshToken } = createTokens(user)
-
-		res.cookie('accessToken', accessToken, {
-			maxAge: 1_000 * 60 * 15
-		})
-		res.cookie('refreshToken', refreshToken, {
-			maxAge: 1_000 * 60 * 60 * 24 * 7
-		})
-
+		applyTokens({ req, res, user })
 		return user
 	}
 }

@@ -12,8 +12,12 @@ type Group {
   name: String!
 }
 
+type Mutation {
+  signUp(email: String!, password: String!): User!
+}
+
 type Query {
-  groups(user: UserWhereUniqueInput!): [Group!]!
+  groups: [Group!]!
   login(email: String!, password: String!): User!
 }
 
@@ -27,9 +31,4 @@ type User {
 
   """User's nickname or preferred name"""
   name: String!
-}
-
-input UserWhereUniqueInput {
-  email: String
-  id: String
 }
