@@ -4,7 +4,7 @@ importers:
       '@types/eslint': 7.2.6
       '@types/prettier': 2.2.0
       eslint: 7.19.0
-      eslint-config-canonical: 25.8.15_eslint@7.19.0
+      eslint-config-canonical: 25.8.17_eslint@7.19.0
       eslint-config-prettier: 7.2.0_eslint@7.19.0
       eslint-import-resolver-typescript: 2.3.0_eslint@7.19.0
       eslint-plugin-prettier: 3.3.1_ea5601adac11a59dc1e2379624986c36
@@ -14,7 +14,7 @@ importers:
       '@types/eslint': 7.2.6
       '@types/prettier': 2.2.0
       eslint: 7.19.0
-      eslint-config-canonical: 25.8.15
+      eslint-config-canonical: 25.8.17
       eslint-config-prettier: 7.2.0
       eslint-import-resolver-typescript: 2.3.0
       eslint-plugin-prettier: 3.3.1
@@ -111,6 +111,20 @@ packages:
     dev: true
     resolution:
       integrity: sha512-HV1Cm0Q3ZrpCR93tkWOYiuYIgLxZXZFVG2VgK+MBWjUqZTundupbfx2aXarXuw5Ko5aMcjtJgbSs4vUGBS5v6g==
+  /@babel/eslint-parser/7.12.16_eslint@7.19.0:
+    dependencies:
+      eslint: 7.19.0
+      eslint-scope: 5.1.0
+      eslint-visitor-keys: 1.3.0
+      semver: 6.3.0
+    dev: true
+    engines:
+      node: ^10.13.0 || ^12.13.0 || >=14.0.0
+    peerDependencies:
+      '@babel/core': '>=7.11.0'
+      eslint: '>=7.5.0'
+    resolution:
+      integrity: sha512-NZHtJr2pLRYcQjvo/GVU3kFxIGEHveswoWfY5Wm2tJ7pb3AoqoQ+PP17rRTDh+POFWM15VvH+23x2/9Od0CYxQ==
   /@babel/generator/7.12.15:
     dependencies:
       '@babel/types': 7.12.13
@@ -1250,7 +1264,7 @@ packages:
       '@babel/types': 7.12.13
       eslint: 7.19.0
       eslint-visitor-keys: 1.3.0
-      resolve: 1.19.0
+      resolve: 1.20.0
     deprecated: babel-eslint is now @babel/eslint-parser. This package will no longer receive updates.
     dev: true
     engines:
@@ -1939,8 +1953,9 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha512-otzzTim2/1+lVrlH19EfQQJEhVJSu0zOb9ygb3iapN6UlyaDtyRq4b5U1FuW0v1lRa9Fp/GJyHkSwm6NqABgCA==
-  /eslint-config-canonical/25.8.15_eslint@7.19.0:
+  /eslint-config-canonical/25.8.17_eslint@7.19.0:
     dependencies:
+      '@babel/eslint-parser': 7.12.16_eslint@7.19.0
       '@typescript-eslint/eslint-plugin': 4.15.0_184c4927cf1e4634756b9428b81948f1
       '@typescript-eslint/parser': 4.15.0_eslint@7.19.0
       babel-eslint: 10.1.0_eslint@7.19.0
@@ -1971,7 +1986,7 @@ packages:
     peerDependencies:
       eslint: ^6.0.0 || ^7.0.0
     resolution:
-      integrity: sha512-1SA0yv/Y8QB1GHNvU2QxmOrsBADK6Y5eep4Cya/HuTyeXEzD323EUghTYWa+Wxkq2uSKrl6zuTsvLsK6mXlT/w==
+      integrity: sha512-eOzcYJhP8GYQ02rUkNZtdGkugWAxBetNK4LEVWTM3KuI0/y9QsoIWihpO8NpbNOu14Qsg+QuQ3y/1zA8we0p2g==
   /eslint-config-prettier/7.2.0_eslint@7.19.0:
     dependencies:
       eslint: 7.19.0
@@ -1984,7 +1999,7 @@ packages:
   /eslint-import-resolver-node/0.3.4:
     dependencies:
       debug: 2.6.9
-      resolve: 1.19.0
+      resolve: 1.20.0
     dev: true
     resolution:
       integrity: sha512-ogtf+5AB/O+nM6DIeBUNr2fuT7ot9Qg/1harBfBtaP13ekEWFQEEMP94BCB7zaNW3gyY+8SHYF00rnqYwXKWOA==
@@ -2128,7 +2143,7 @@ packages:
       minimatch: 3.0.4
       object.values: 1.1.2
       read-pkg-up: 2.0.0
-      resolve: 1.19.0
+      resolve: 1.20.0
       tsconfig-paths: 3.9.0
     dev: true
     engines:
@@ -2214,7 +2229,7 @@ packages:
       eslint-utils: 2.1.0
       ignore: 5.1.8
       minimatch: 3.0.4
-      resolve: 1.19.0
+      resolve: 1.20.0
       semver: 6.3.0
     dev: true
     engines:
@@ -2269,7 +2284,7 @@ packages:
       object.fromentries: 2.0.3
       object.values: 1.1.2
       prop-types: 15.7.2
-      resolve: 1.19.0
+      resolve: 1.20.0
       string.prototype.matchall: 4.0.3
     dev: true
     engines:
@@ -2314,6 +2329,15 @@ packages:
       node: '>=4.0.0'
     resolution:
       integrity: sha512-bt+Sh8CtDmn2OajxvNO+BX7Wn4CIWMpTRm3MaiKPCQcnnlm0CS2mhui6QaoeQugs+3Kj2ESKEEGJUdVafwhiCg==
+  /eslint-scope/5.1.0:
+    dependencies:
+      esrecurse: 4.3.0
+      estraverse: 4.3.0
+    dev: true
+    engines:
+      node: '>=8.0.0'
+    resolution:
+      integrity: sha512-iiGRvtxWqgtx5m8EyQUJihBloE4EnYeGE/bz1wSPwJE6tZuJUtHlhqDM4Xj2ukE8Dyy1+HCZ4hE0fzIVMzb58w==
   /eslint-scope/5.1.1:
     dependencies:
       esrecurse: 4.3.0
