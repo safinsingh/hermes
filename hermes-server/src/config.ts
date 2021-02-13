@@ -7,5 +7,6 @@ const argonSecret = Buffer.from(
 )
 const port = process.env.PORT ?? 4_000
 const prisma = new PrismaClient()
+const redisURL = process.env.REDIS_URL ?? ''
 
-export { jwtSecret, prisma, port, argonSecret }
+export { jwtSecret, prisma, port, argonSecret, redisURL }

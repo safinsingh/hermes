@@ -4,9 +4,12 @@ import { join } from 'path'
 import { ApolloServer } from 'apollo-server-express'
 import cookieParser from 'cookie-parser'
 import express from 'express'
+import RateLimit from 'express-slow-down'
+import RedisStore from 'rate-limit-redis'
 import { buildSchema } from 'type-graphql'
-import { authChecker, jwtVerify } from './auth'
-import { prisma, port } from './config'
+import { authChecker } from './auth'
+import { prisma, port, redisURL } from './config'
+import { jwt, logger } from './middleware'
 import {
 	FindManyGroupResolver,
 	LoginResolver,
@@ -28,9 +31,20 @@ const main = async () => {
 		schema
 	})
 
+	const limiter = RateLimit({
+		delayAfter: 100,
+		delayMs: 500,
+		store: new RedisStore({
+			redisURL
+		}),
+		windowMs: 60 * 1_000
+	})
+
 	const app = express()
 	app.use(cookieParser())
-	app.use(jwtVerify())
+	app.use(jwt())
+	app.use(logger())
+	app.use(limiter)
 
 	server.applyMiddleware({ app })
 	app.listen({ port }, () => {
