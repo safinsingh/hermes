@@ -15,6 +15,14 @@ export default class LoginResolver {
 		@Arg('password') password: string
 	): Promise<User> {
 		const user = await prisma.user.findUnique({
+			include: {
+				groups: {
+					select: {
+						id: true,
+						name: true
+					}
+				}
+			},
 			where: {
 				email
 			}

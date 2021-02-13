@@ -3,6 +3,11 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+"""
+The javascript `Date` as string. Type represents date and time as the ISO Date string.
+"""
+scalar DateTime
+
 """Overarching group model"""
 type Group {
   """Group ID"""
@@ -12,13 +17,34 @@ type Group {
   name: String!
 }
 
+"""Overarching message model"""
+type Message {
+  """Unique group identifier"""
+  groupId: String!
+
+  """Message ID"""
+  id: String!
+
+  """Message content"""
+  text: String!
+
+  """Time at which message was sent"""
+  timestamp: DateTime!
+
+  """Unique user identifier"""
+  userId: String!
+}
+
 type Mutation {
+  createGroup(name: String!, password: String, users: [String!]): Group!
+  sendMessage(groupId: String!, text: String!, userId: String!): Message!
   signUp(email: String!, password: String!): User!
 }
 
 type Query {
   groups: [Group!]!
   login(email: String!, password: String!): User!
+  signOut: Boolean!
 }
 
 """Individual user"""

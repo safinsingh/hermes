@@ -1,3 +1,8 @@
 export { default as SignUpResolver } from './SignUpResolver'
 export { default as LoginResolver } from './LoginResolver'
 export { default as FindManyGroupResolver } from './FindManyGroupResolver'
+export { default as SignOutResolver } from './SignOutResolver'
+export { default as SendMessageResolver } from './SendMessageResolver'
+export { default as CreateGroupResolver } from './CreateGroupResolver'
+export { default as JoinGroupResolver } from './JoinGroupResolver'
+export { default as RemoveGroupResolver } from './RemoveGroupResolver'

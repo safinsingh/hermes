@@ -55,8 +55,10 @@ module.exports = {
 		'@typescript-eslint/no-confusing-void-expression': 'off',
 		'newline-before-return': 'off',
 		'no-console': 'off',
+		'no-warning-comments': 'off',
 		'node/no-missing-import': 'off',
 		'node/no-process-env': 'off',
+		'promise/catch-or-return': 'off',
 		'unicorn/prevent-abbreviations': 'off'
 	},
 	settings: {

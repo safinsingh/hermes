@@ -13,7 +13,12 @@ import { jwt, logger } from './middleware'
 import {
 	FindManyGroupResolver,
 	LoginResolver,
-	SignUpResolver
+	SignUpResolver,
+	SignOutResolver,
+	SendMessageResolver,
+	CreateGroupResolver,
+	JoinGroupResolver,
+	RemoveGroupResolver
 } from './resolvers'
 import type { Context } from './types'
 
@@ -21,7 +26,16 @@ const main = async () => {
 	const schema = await buildSchema({
 		authChecker,
 		emitSchemaFile: join(__dirname, '../prisma/schema.generated.graphql'),
-		resolvers: [FindManyGroupResolver, LoginResolver, SignUpResolver],
+		resolvers: [
+			FindManyGroupResolver,
+			LoginResolver,
+			SignUpResolver,
+			SignOutResolver,
+			SendMessageResolver,
+			CreateGroupResolver,
+			JoinGroupResolver,
+			RemoveGroupResolver
+		],
 		validate: false
 	})
 
@@ -54,4 +68,8 @@ const main = async () => {
 	})
 }
 
-main().catch(console.error)
+main()
+	.catch(console.error)
+	.finally(() => {
+		void prisma.$disconnect()
+	})
