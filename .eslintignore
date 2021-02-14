@@ -2,4 +2,4 @@
 **/dist/**
 **/bin/**
 **/build/**
-**/type-graphql-gen
+**/generated/**

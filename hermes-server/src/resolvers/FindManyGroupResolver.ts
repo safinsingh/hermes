@@ -1,7 +1,7 @@
 import type { Prisma } from '@prisma/client'
 import { ApolloError } from 'apollo-server-express'
 import { Query, Resolver, Ctx, Authorized } from 'type-graphql'
-import { Group, User } from '../type-graphql-gen'
+import { Group, User } from '../generated/type-graphql'
 import { Context } from '../types'
 
 @Resolver((of) => User)

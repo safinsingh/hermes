@@ -6,6 +6,7 @@ module.exports = {
 		'canonical/node',
 		'plugin:prettier/recommended',
 		'prettier/@typescript-eslint',
+		'prettier/react',
 		'prettier/babel'
 	],
 	overrides: [
@@ -19,7 +20,7 @@ module.exports = {
 			}
 		},
 		{
-			files: ['\\.*\\.js', '*.d.ts'],
+			files: ['\\.*\\.js', '*.d.ts', '*\\.config\\.js', '_*\\.tsx'],
 			rules: {
 				'filenames/match-regex': 'off'
 			}
@@ -44,6 +45,32 @@ module.exports = {
 			rules: {
 				'import/no-unassigned-import': 'off'
 			}
+		},
+		{
+			extends: ['canonical/react'],
+			files: ['./hermes-web/**'],
+			parserOptions: {
+				project: './hermes-web/tsconfig.eslint.json'
+			},
+			rules: {
+				'fp/no-class': 'off',
+				// temporary
+				'import/no-unresolved': 'off',
+				'react/jsx-indent': 'off',
+				'react/jsx-indent-props': 'off',
+				'react/prop-types': 'off'
+			},
+			settings: {
+				react: {
+					version: 'latest'
+				}
+			}
+		},
+		{
+			files: ['_app.tsx'],
+			settings: {
+				'filenames/match-exported': 'off'
+			}
 		}
 	],
 	parserOptions: {
@@ -53,6 +80,8 @@ module.exports = {
 	rules: {
 		'@typescript-eslint/explicit-module-boundary-types': 'off',
 		'@typescript-eslint/no-confusing-void-expression': 'off',
+		'filenames/match-exported': 'off',
+		'import/extensions': 'off',
 		'newline-before-return': 'off',
 		'no-console': 'off',
 		'no-warning-comments': 'off',

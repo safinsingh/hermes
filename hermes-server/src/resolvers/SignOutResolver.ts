@@ -1,5 +1,5 @@
 import { Query, Resolver, Ctx } from 'type-graphql'
-import { User } from '../type-graphql-gen'
+import { User } from '../generated/type-graphql'
 import { Context } from '../types'
 
 @Resolver((of) => User)

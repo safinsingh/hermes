@@ -3,14 +3,14 @@ import { ApolloError } from 'apollo-server-express'
 import * as argon2 from 'argon2'
 import { Arg, Mutation, Resolver, Ctx } from 'type-graphql'
 import { argonSecret } from '../config'
-import { User, Group } from '../type-graphql-gen'
+import { User } from '../generated/type-graphql'
 import { Context } from '../types'
 
 @Resolver((of) => User)
 export default class JoinGroupResolver {
-	@Mutation((returns) => Group)
+	@Mutation((returns) => User)
 	public async joinGroup(
-		@Ctx() { prisma }: Context,
+		@Ctx() { prisma, req: { userID } }: Context,
 		@Arg('id') id: string,
 		@Arg('password', { nullable: true }) password?: string
 	): Promise<
@@ -35,8 +35,19 @@ export default class JoinGroupResolver {
 			(await argon2.verify(group.password!, password, {
 				salt: argonSecret
 			}))
-		)
+		) {
+			await prisma.user.update({
+				data: {
+					groups: {
+						connect: {
+							id
+						}
+					}
+				},
+				where: { id: userID }
+			})
+
 			return { id: group.id, name: group.name }
-		else throw new ApolloError('Incorrect group password!', '404')
+		} else throw new ApolloError('Incorrect group password!', '404')
 	}
 }

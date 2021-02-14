@@ -1,6 +1,6 @@
 import type { Prisma } from '@prisma/client'
 import { Arg, Mutation, Resolver, Ctx } from 'type-graphql'
-import { User, Group } from '../type-graphql-gen'
+import { User, Group } from '../generated/type-graphql'
 import { Context } from '../types'
 
 @Resolver((of) => User)

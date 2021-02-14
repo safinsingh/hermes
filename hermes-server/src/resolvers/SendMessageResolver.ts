@@ -1,7 +1,7 @@
 import type { Prisma } from '@prisma/client'
 import { ApolloError } from 'apollo-server-express'
 import { Mutation, Resolver, Ctx, Authorized, Arg } from 'type-graphql'
-import { Message } from '../type-graphql-gen'
+import { Message } from '../generated/type-graphql'
 import { Context } from '../types'
 
 const userSelection = {

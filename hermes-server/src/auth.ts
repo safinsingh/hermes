@@ -3,6 +3,7 @@ import type { Response, Request } from 'express'
 import * as jwt from 'jsonwebtoken'
 import type { AuthChecker } from 'type-graphql'
 import { prisma, jwtSecret } from './config'
+import type { User } from './generated/type-graphql'
 import type { Context } from './types'
 
 export const authChecker: AuthChecker<Context> = async ({
@@ -27,9 +28,11 @@ export const authChecker: AuthChecker<Context> = async ({
 export const createTokens = ({
 	id,
 	count
-}: Prisma.UserGetPayload<{
-	select: { id: true; count: true }
-}>) => ({
+}:
+	| Prisma.UserGetPayload<{
+			select: { id: true; count: true }
+	  }>
+	| User) => ({
 	accessToken: jwt.sign({ count, id }, jwtSecret, {
 		algorithm: 'HS256',
 		expiresIn: '7d'
@@ -47,9 +50,11 @@ export const applyTokens = ({
 }: {
 	req: Request
 	res: Response
-	user: Prisma.UserGetPayload<{
-		select: { id: true; count: true }
-	}>
+	user:
+		| Prisma.UserGetPayload<{
+				select: { id: true; count: true }
+		  }>
+		| User
 }) => {
 	const {
 		accessToken: newAccessToken,

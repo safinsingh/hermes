@@ -1,14 +1,14 @@
 import { AuthenticationError } from 'apollo-server-express'
 import * as argon2 from 'argon2'
-import { Arg, Query, Resolver, Ctx } from 'type-graphql'
+import { Arg, Mutation, Resolver, Ctx } from 'type-graphql'
 import { applyTokens } from '../auth'
 import { argonSecret } from '../config'
-import { User } from '../type-graphql-gen'
+import { User } from '../generated/type-graphql'
 import { Context } from '../types'
 
 @Resolver((of) => User)
 export default class LoginResolver {
-	@Query((returns) => User)
+	@Mutation((returns) => User)
 	public async login(
 		@Ctx() { prisma, req, res }: Context,
 		@Arg('email') email: string,

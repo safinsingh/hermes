@@ -4,4 +4,4 @@
 **/build
 **/*.tsbuildinfo
 **/.env
-**/type-graphql-gen
+**/generated

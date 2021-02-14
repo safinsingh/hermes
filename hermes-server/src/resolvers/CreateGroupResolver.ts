@@ -2,7 +2,7 @@ import type { Prisma } from '@prisma/client'
 import * as argon2 from 'argon2'
 import { Arg, Mutation, Resolver, Ctx } from 'type-graphql'
 import { argonSecret } from '../config'
-import { Group } from '../type-graphql-gen'
+import { Group } from '../generated/type-graphql'
 import { Context } from '../types'
 
 @Resolver((of) => Group)

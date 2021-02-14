@@ -9,7 +9,7 @@ generator client {
 
 generator typegraphql {
    provider = "typegraphql-prisma"
-   output   = "../src/type-graphql-gen"
+   output   = "../src/generated/type-graphql"
 }
 
 /// Individual user
