@@ -41,12 +41,12 @@ type Mutation {
   login(email: String!, password: String!): User!
   removeGroup(groupId: String!, userId: String!): Group!
   sendMessage(groupId: String!, text: String!, userId: String!): Message!
+  signOut: Boolean!
   signUp(email: String!, name: String!, password: String!): User!
 }
 
 type Query {
   groups: [Group!]!
-  signOut: Boolean!
 }
 
 """Individual user"""

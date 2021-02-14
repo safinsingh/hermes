@@ -11,3 +11,14 @@ body,
 #__next {
 	min-height: 100vh;
 }
+
+.blur-white {
+	background-color: white;
+}
+
+@supports (backdrop-filter: none) {
+	.blur-white {
+		background-color: rgba(255, 255, 255, 0.479);
+		backdrop-filter: blur(5px);
+	}
+}

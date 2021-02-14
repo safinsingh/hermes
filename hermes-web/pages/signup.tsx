@@ -37,7 +37,8 @@ const SignUp = () => {
 	const [loading, setLoading] = useState(false)
 	const toast = useToast({
 		isClosable: true,
-		position: 'top-right'
+		position: 'top-right',
+		variant: 'solid'
 	})
 	const router = useRouter()
 

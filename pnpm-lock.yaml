@@ -92,6 +92,7 @@ importers:
       typescript: 4.1.5
   hermes-web:
     dependencies:
+      '@chakra-ui/icons': 1.0.5_react@17.0.1
       '@chakra-ui/react': 1.3.3_2f877d37de4099be3d73a8ee38c38ec5
       '@emotion/react': 11.1.5_@types+react@17.0.2+react@17.0.1
       '@emotion/styled': 11.1.5_a444bc1706cb5f754e69bc6eb4e89491
@@ -109,6 +110,7 @@ importers:
       hermes-server: link:../hermes-server
       typescript: 4.1.5
     specifiers:
+      '@chakra-ui/icons': ^1.0.5
       '@chakra-ui/react': 1.3.3
       '@emotion/react': 11.1.5
       '@emotion/styled': 11.1.5
@@ -945,6 +947,27 @@ packages:
       react: '>=16.8.6'
     resolution:
       integrity: sha512-dL1D1q11MM+cL849jmADSjY8KqOWplAEb/XgLXX/ZZau7GHqYAXIwdYnfXwOYBaypiosUvGsm9g2zU4iHYZtdg==
+  /@chakra-ui/icon/1.1.1_react@17.0.1:
+    dependencies:
+      '@chakra-ui/utils': 1.2.0_react@17.0.1
+      react: 17.0.1
+    dev: false
+    peerDependencies:
+      '@chakra-ui/system': '>=1.0.0'
+      react: '>=16.8.6'
+    resolution:
+      integrity: sha512-dL1D1q11MM+cL849jmADSjY8KqOWplAEb/XgLXX/ZZau7GHqYAXIwdYnfXwOYBaypiosUvGsm9g2zU4iHYZtdg==
+  /@chakra-ui/icons/1.0.5_react@17.0.1:
+    dependencies:
+      '@chakra-ui/icon': 1.1.1_react@17.0.1
+      '@types/react': 17.0.2
+      react: 17.0.1
+    dev: false
+    peerDependencies:
+      '@chakra-ui/system': '>=1.0.0'
+      react: '>=16.8.6'
+    resolution:
+      integrity: sha512-l8CgisPAS44ehKLw/hoHI6dfSX7pOAfylv8QkINVPEzhHwnNIg0wHzcm1cGkRXuq3DN8G0z88KmFegFFp02yiA==
   /@chakra-ui/image/1.0.7_6aef2e76549aad1a260ba698d167624c:
     dependencies:
       '@chakra-ui/hooks': 1.1.4_react@17.0.1
@@ -2639,7 +2662,6 @@ packages:
     resolution:
       integrity: sha512-DxZZbyMAM9GWEzXL+BMZROWz9oo6A9EilwwOMET2UVu2uZTqMWS5S69KVtuVKaRjCUpcrOXRalet86/OpG4kqw==
   /@types/prop-types/15.7.3:
-    dev: true
     resolution:
       integrity: sha512-KfRL3PuHmqQLOG+2tGpRO26Ctg+Cq1E01D2DMriKEATHgWLfeNDmq9e29Q9WIky0dQ3NPkd1mzYH8Lm936Z9qw==
   /@types/qs/6.9.5:
@@ -2660,7 +2682,6 @@ packages:
     dependencies:
       '@types/prop-types': 15.7.3
       csstype: 3.0.6
-    dev: true
     resolution:
       integrity: sha512-Xt40xQsrkdvjn1EyWe1Bc0dJLcil/9x2vAuW7ya+PuQip4UYUaXyhzWmAbwRsdMgwOFHpfp7/FFZebDU6Y8VHA==
   /@types/redis/2.8.28:

@@ -1,32 +1,17 @@
-import {
-	Container,
-	FormControl,
-	Table,
-	Td,
-	Tr,
-	useToast,
-	Input,
-	FormHelperText,
-	FormLabel,
-	Button,
-	Stack,
-	useDisclosure,
-	ModalOverlay,
-	ModalContent,
-	ModalHeader,
-	Modal,
-	ModalFooter,
-	Tbody
-} from '@chakra-ui/react'
+/* eslint-disable @typescript-eslint/unbound-method */
+
+import { ChatIcon, LinkIcon, CloseIcon } from '@chakra-ui/icons'
+import { Container, useToast, Flex, IconButton, HStack } from '@chakra-ui/react'
 import gql from 'graphql-tag'
 import type {
 	Group,
-	MutationCreateGroupArgs
+	MutationCreateGroupArgs,
+	MutationJoinGroupArgs
 } from 'hermes-server/dist/generated/urql'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useQuery, useMutation } from 'urql'
-import Loading from '~/components/Loading'
+import { FormModal, Loading } from '~/components'
 
 const CHAT_QUERY = gql`
 	query {
@@ -46,25 +31,74 @@ const CREATE_GROUP_MUTATION = gql`
 	}
 `
 
+const JOIN_GROUP_MUTATION = gql`
+	mutation($id: String!, $password: String) {
+		joinGroup(id: $id, password: $password) {
+			id
+			name
+		}
+	}
+`
+
 const Chat = () => {
-	// eslint-disable-next-line @typescript-eslint/unbound-method
 	const { register, handleSubmit } = useForm()
+	const { register: registerJoin, handleSubmit: handleJoinSubmit } = useForm()
+
 	const [result, reexecuteQuery] = useQuery<{ groups: Group[] }>({
 		query: CHAT_QUERY,
 		requestPolicy: 'network-only'
 	})
+
 	const [, createGroup] = useMutation<
 		Group,
 		MutationCreateGroupArgs,
 		'createGroup'
 	>(CREATE_GROUP_MUTATION)
+	const [, joinGroup] = useMutation<Group, MutationJoinGroupArgs, 'joinGroup'>(
+		JOIN_GROUP_MUTATION
+	)
+
 	const toast = useToast({
 		isClosable: true,
-		position: 'top-right'
+		position: 'top-right',
+		variant: 'solid'
 	})
 	const { data, fetching, error } = result
 	const [loading, setLoading] = useState(false)
-	const { isOpen, onOpen, onClose } = useDisclosure()
+	const [joinLoading, setJoinLoading] = useState(false)
+
+	const onJoinSubmit = async ({ id, password }: MutationJoinGroupArgs) => {
+		if (!id) {
+			toast({
+				description: 'Please specify (at least) the ID!',
+				status: 'error',
+				title: 'Error'
+			})
+			return
+		}
+
+		setJoinLoading(true)
+		const group = await joinGroup({ id, password })
+		setLoading(false)
+
+		if (group.error) {
+			toast({
+				description: group.error.message,
+				status: 'error',
+				title: 'Error'
+			})
+		} else {
+			const { name: groupName } = group.data.joinGroup
+
+			toast({
+				description: `Joined group: ${groupName}`,
+				status: 'success',
+				title: `Success`
+			})
+
+			reexecuteQuery()
+		}
+	}
 
 	const onSubmit = async ({ password, name }: MutationCreateGroupArgs) => {
 		if (!name) {
@@ -90,11 +124,10 @@ const Chat = () => {
 			const { name: groupName } = group.data.createGroup
 
 			toast({
-				description: `Created group: ${groupName}!`,
+				description: `Created group: ${groupName}`,
 				status: 'success',
 				title: `Success`
 			})
-			onClose()
 
 			reexecuteQuery()
 		}
@@ -111,48 +144,74 @@ const Chat = () => {
 
 	return (
 		<Container>
-			<Button onClick={onOpen}>Create a group</Button>
-			<Modal isOpen={isOpen} onClose={onClose}>
-				<ModalOverlay />
-				<ModalContent p="4">
-					<ModalHeader>Create a group</ModalHeader>
-					<form onSubmit={handleSubmit(onSubmit)}>
-						<Stack spacing={3}>
-							<FormControl id="name">
-								<FormLabel>Group name</FormLabel>
-								<Input name="name" ref={register} type="text" />
-							</FormControl>
-							<FormControl id="password">
-								<FormLabel>Group password</FormLabel>
-								<Input name="groupName" ref={register} type="text" />
-								<FormHelperText>Optional</FormHelperText>
-							</FormControl>
-							<ModalFooter>
-								<Button
-									colorScheme="teal"
-									isLoading={loading}
-									px="2"
-									type="submit"
-								>
-									Create
-								</Button>
-								<Button onClick={onClose} variant="ghost">
-									Close
-								</Button>
-							</ModalFooter>
-						</Stack>
-					</form>
-				</ModalContent>
-			</Modal>
-			<Table>
-				<Tbody>
-					{data?.groups.map((group) => (
-						<Tr>
-							<Td key={group.id}>{group.name}</Td>
-						</Tr>
-					))}
-				</Tbody>
-			</Table>
+			<FormModal
+				action="Create"
+				buttonText="Create a group"
+				fields={[
+					{
+						id: 'name',
+						name: 'Group Name'
+					},
+					{
+						helperText: 'Optional',
+						id: 'password',
+						inputType: 'password',
+						name: 'Group password'
+					}
+				]}
+				loading={loading}
+				onSubmit={handleSubmit(onSubmit)}
+				register={register}
+			/>
+			<FormModal
+				action="Join"
+				buttonText="Join a group"
+				fields={[
+					{
+						id: 'id',
+						name: 'Group ID'
+					},
+					{
+						helperText: 'Optional',
+						id: 'password',
+						inputType: 'password',
+						name: 'Group password'
+					}
+				]}
+				loading={joinLoading}
+				onSubmit={handleJoinSubmit(onJoinSubmit)}
+				register={registerJoin}
+			/>
+			{data?.groups.map((group) => (
+				<Flex
+					align="center"
+					borderRadius="lg"
+					borderWidth="1px"
+					justify="space-between"
+					key={group.id}
+					my="3"
+					p="6"
+				>
+					{group.name}
+					<HStack spacing="3">
+						<IconButton aria-label="Go to group" icon={<ChatIcon />} />
+						<IconButton
+							aria-label="Share group link"
+							icon={<LinkIcon />}
+							onClick={async () => {
+								// TODO: change to actual url
+								await navigator.clipboard.writeText(group.id)
+								toast({
+									description: `Copied group ID to clipboard!`,
+									status: 'success',
+									title: `Success`
+								})
+							}}
+						/>
+						<IconButton aria-label="Leave group" icon={<CloseIcon />} />
+					</HStack>
+				</Flex>
+			))}
 		</Container>
 	)
 }

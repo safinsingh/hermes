@@ -6,7 +6,10 @@ const Navbar: React.FC<{
 }> = ({ active }) => (
 	<Flex
 		align="center"
+		// eslint-disable-next-line react/forbid-component-props
+		className="blur-white"
 		justify="center"
+		mb={3}
 		position={
 			active === '/login' || active === '/signup' ? 'absolute' : 'sticky'
 		}
@@ -14,6 +17,7 @@ const Navbar: React.FC<{
 		py={['4', '6']}
 		top={0}
 		w="100%"
+		zIndex={999}
 	>
 		{['Home', 'Sign Up', 'Login', 'Chat'].map((page) => {
 			const path = '/' + page.replace(' ', '').toLowerCase()

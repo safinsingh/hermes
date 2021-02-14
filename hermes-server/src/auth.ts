@@ -33,13 +33,13 @@ export const createTokens = ({
 			select: { id: true; count: true }
 	  }>
 	| User) => ({
-	accessToken: jwt.sign({ count, id }, jwtSecret, {
-		algorithm: 'HS256',
-		expiresIn: '7d'
-	}),
-	refreshToken: jwt.sign({ id }, jwtSecret, {
+	accessToken: jwt.sign({ id }, jwtSecret, {
 		algorithm: 'HS256',
 		expiresIn: '15m'
+	}),
+	refreshToken: jwt.sign({ count, id }, jwtSecret, {
+		algorithm: 'HS256',
+		expiresIn: '7d'
 	})
 })
 
