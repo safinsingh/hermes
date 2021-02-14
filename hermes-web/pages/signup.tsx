@@ -35,14 +35,16 @@ const SignUp = () => {
 		SignUpMutation
 	)
 	const [loading, setLoading] = useState(false)
-	const toast = useToast()
+	const toast = useToast({
+		isClosable: true,
+		position: 'top-right'
+	})
 	const router = useRouter()
 
 	const onSubmit = async ({ email, name, password }: MutationSignUpArgs) => {
 		if (!email || !name || !password) {
 			toast({
 				description: 'Please fill out all the fields!',
-				position: 'top-right',
 				status: 'error',
 				title: 'Error'
 			})
@@ -56,7 +58,6 @@ const SignUp = () => {
 		if (user.error)
 			toast({
 				description: user.error.message,
-				position: 'top-right',
 				status: 'error',
 				title: 'Error'
 			})
@@ -69,7 +70,7 @@ const SignUp = () => {
 				title: `Welcome${firstName && `, ${firstName}`}!`
 			})
 
-			await router.push('/')
+			await router.push('/chat')
 		}
 	}
 

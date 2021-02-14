@@ -5,10 +5,11 @@ import { ApolloServer } from 'apollo-server-express'
 import cookieParser from 'cookie-parser'
 import express from 'express'
 import RateLimit from 'express-slow-down'
+import { RedisPubSub } from 'graphql-redis-subscriptions'
 import RedisStore from 'rate-limit-redis'
 import { buildSchema } from 'type-graphql'
 import { authChecker } from './auth'
-import { prisma, port, redisURL } from './config'
+import { prisma, port, redisURL, pubSubHost, pubSubPort } from './config'
 import { jwt, logger } from './middleware'
 import {
 	FindManyGroupResolver,
@@ -23,9 +24,17 @@ import {
 import type { Context } from './types'
 
 const main = async () => {
+	// const pubSub = new RedisPubSub({
+	// 	connection: {
+	// 		host: pubSubHost,
+	// 		port: pubSubPort
+	// 	}
+	// })
+
 	const schema = await buildSchema({
 		authChecker,
 		emitSchemaFile: join(__dirname, '../prisma/schema.generated.graphql'),
+		// pubSub,
 		resolvers: [
 			FindManyGroupResolver,
 			LoginResolver,
@@ -60,7 +69,14 @@ const main = async () => {
 	app.use(logger())
 	app.use(limiter)
 
-	server.applyMiddleware({ app })
+	server.applyMiddleware({
+		app,
+		cors: {
+			credentials: true,
+			origin: 'http://localhost:3000'
+		}
+	})
+
 	app.listen({ port }, () => {
 		console.log(
 			`Hermes GraphQL is listening on http://localhost:${port}${server.graphqlPath}`

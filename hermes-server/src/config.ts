@@ -8,5 +8,15 @@ const argonSecret = Buffer.from(
 const port = process.env.PORT ?? 4_000
 const prisma = new PrismaClient()
 const redisURL = process.env.REDIS_URL ?? ''
+const pubSubHost = process.env.PUBSUB_HOST ?? 'localhost'
+const pubSubPort = Number.parseInt(process.env.PUBSUB_PORT ?? '0', 10)
 
-export { jwtSecret, prisma, port, argonSecret, redisURL }
+export {
+	jwtSecret,
+	prisma,
+	port,
+	argonSecret,
+	redisURL,
+	pubSubHost,
+	pubSubPort
+}

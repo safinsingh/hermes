@@ -2,18 +2,20 @@ import { Flex, chakra } from '@chakra-ui/react'
 import Link from 'next/link'
 
 const Navbar: React.FC<{
-	active: '/' | '/login' | '/signup'
+	active: '/' | '/login' | '/signup' | 'chat'
 }> = ({ active }) => (
 	<Flex
 		align="center"
 		justify="center"
-		position="absolute"
+		position={
+			active === '/login' || active === '/signup' ? 'absolute' : 'sticky'
+		}
 		px={['4', '6']}
 		py={['4', '6']}
 		top={0}
 		w="100%"
 	>
-		{['Home', 'Sign Up', 'Login'].map((page) => {
+		{['Home', 'Sign Up', 'Login', 'Chat'].map((page) => {
 			const path = '/' + page.replace(' ', '').toLowerCase()
 			const isActive = active === '/' ? page === 'Home' : page === path
 

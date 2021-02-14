@@ -7,6 +7,9 @@ import Navbar from '~/components/Navbar'
 import { customTheme } from '~/theme'
 
 const client = createClient({
+	fetchOptions: {
+		credentials: 'include'
+	},
 	url: 'http://localhost:4000/graphql'
 })
 

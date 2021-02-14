@@ -36,7 +36,7 @@ type Message {
 }
 
 type Mutation {
-  createGroup(name: String!, password: String, users: [String!]): Group!
+  createGroup(name: String!, password: String): Group!
   joinGroup(id: String!, password: String): User!
   login(email: String!, password: String!): User!
   removeGroup(groupId: String!, userId: String!): Group!

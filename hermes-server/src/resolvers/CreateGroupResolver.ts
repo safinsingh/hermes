@@ -1,20 +1,20 @@
 import type { Prisma } from '@prisma/client'
 import * as argon2 from 'argon2'
-import { Arg, Mutation, Resolver, Ctx } from 'type-graphql'
+import { Arg, Mutation, Resolver, Ctx, Authorized } from 'type-graphql'
 import { argonSecret } from '../config'
 import { Group } from '../generated/type-graphql'
 import { Context } from '../types'
 
 @Resolver((of) => Group)
 export default class CreateGroupResolver {
+	@Authorized()
 	@Mutation((returns) => Group)
 	public async createGroup(
-		@Ctx() { prisma }: Context,
+		@Ctx() { prisma, req: { userID } }: Context,
 		@Arg('name') name: string,
-		@Arg('password', { nullable: true }) password?: string,
-		@Arg('users', (type) => [String], { nullable: true }) users?: string[]
+		@Arg('password', { nullable: true }) password?: string
 	): Promise<
-		Prisma.UserGetPayload<{
+		Prisma.GroupGetPayload<{
 			select: {
 				id: true
 				name: true
@@ -26,10 +26,8 @@ export default class CreateGroupResolver {
 				name,
 				password:
 					password && (await argon2.hash(password, { salt: argonSecret })),
-				users: users && {
-					connect: users.map((email) => ({
-						email
-					}))
+				users: {
+					connect: { id: userID }
 				}
 			},
 			select: {

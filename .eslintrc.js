@@ -58,6 +58,7 @@ module.exports = {
 				'import/no-unresolved': 'off',
 				// temporary
 				'node/no-unpublished-import': 'off',
+				'react/jsx-fragments': 'off',
 				'react/jsx-indent': 'off',
 				'react/jsx-indent-props': 'off',
 				'react/prop-types': 'off'

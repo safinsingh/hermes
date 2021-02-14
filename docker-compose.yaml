@@ -11,3 +11,7 @@ services:
     image: redis
     ports:
       - '6379:6379'
+  pubsub:
+    image: redis
+    ports:
+      - '7963:7963'
