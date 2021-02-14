@@ -1,2 +1,3 @@
 *.graphql linguist-detectable=true
+*.prisma linguist-detectable=true
 * text=auto eol=lf
