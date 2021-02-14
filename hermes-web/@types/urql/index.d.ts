@@ -1,5 +1,12 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import * as urql from 'urql'
+
 declare module 'urql' {
-	export interface OperationResult<Data = never, Variables = never, Key = ''> {
+	export declare type OperationResult<
+		Data = never,
+		Variables = never,
+		Key = never
+	> = {
 		/** The [operation]{@link Operation} which has been executed. */
 		operation: Operation<Data, Variables>
 		/** The data returned from the Graphql server. */
@@ -17,7 +24,7 @@ declare module 'urql' {
 	export declare type UseMutationResponse<
 		Data = never,
 		Variables = never,
-		Key = ''
+		Key = never
 	> = [
 		UseMutationState<Data, Variables>,
 		(

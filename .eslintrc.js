@@ -56,6 +56,8 @@ module.exports = {
 				'fp/no-class': 'off',
 				// temporary
 				'import/no-unresolved': 'off',
+				// temporary
+				'node/no-unpublished-import': 'off',
 				'react/jsx-indent': 'off',
 				'react/jsx-indent-props': 'off',
 				'react/prop-types': 'off'

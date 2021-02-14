@@ -9,24 +9,26 @@ import {
 	Flex,
 	useToast
 } from '@chakra-ui/react'
+import gql from 'graphql-tag'
 import type {
 	User,
 	MutationSignUpArgs
 } from 'hermes-server/dist/generated/urql'
+import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useMutation } from 'urql'
 
-const SignUpMutation = `
-mutation ($email: String!, $name: String!, $password: String!) {
-	signUp (email: $email, name: $name, password: $password) {
-		name
-		id
+const SignUpMutation = gql`
+	mutation($email: String!, $name: String!, $password: String!) {
+		signUp(email: $email, name: $name, password: $password) {
+			name
+			id
+		}
 	}
-}
 `
 
-const Index = () => {
+const SignUp = () => {
 	// eslint-disable-next-line @typescript-eslint/unbound-method
 	const { register, handleSubmit } = useForm()
 	const [, signUp] = useMutation<User, MutationSignUpArgs, 'signUp'>(
@@ -34,6 +36,7 @@ const Index = () => {
 	)
 	const [loading, setLoading] = useState(false)
 	const toast = useToast()
+	const router = useRouter()
 
 	const onSubmit = async ({ email, name, password }: MutationSignUpArgs) => {
 		if (!email || !name || !password) {
@@ -65,6 +68,8 @@ const Index = () => {
 				status: 'success',
 				title: `Welcome${firstName && `, ${firstName}`}!`
 			})
+
+			await router.push('/')
 		}
 	}
 
@@ -99,4 +104,4 @@ const Index = () => {
 	)
 }
 
-export default Index
+export default SignUp

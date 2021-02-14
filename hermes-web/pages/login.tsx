@@ -8,18 +8,20 @@ import {
 	Flex,
 	useToast
 } from '@chakra-ui/react'
+import gql from 'graphql-tag'
 import type { User, MutationLoginArgs } from 'hermes-server/dist/generated/urql'
+import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useMutation } from 'urql'
 
-const LoginMutation = `
-mutation ($email: String!, $password: String!) {
-	login (email: $email, password: $password) {
-		name
-		id
+const LoginMutation = gql`
+	mutation($email: String!, $password: String!) {
+		login(email: $email, password: $password) {
+			name
+			id
+		}
 	}
-}
 `
 
 const LogIn = () => {
@@ -30,6 +32,7 @@ const LogIn = () => {
 	)
 	const [loading, setLoading] = useState(false)
 	const toast = useToast()
+	const router = useRouter()
 
 	const onSubmit = async ({ email, password }: MutationLoginArgs) => {
 		if (!email || !password) {
@@ -61,6 +64,8 @@ const LogIn = () => {
 				status: 'success',
 				title: `Welcome${firstName && `, ${firstName}`}!`
 			})
+
+			await router.push('/')
 		}
 	}
 
