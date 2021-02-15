@@ -41,11 +41,13 @@ pnpm_installed || {
 # begin repository checks concurrently
 {
 	info "Running \`fmt\` check..."
-	exec pnpm run fmt:ci >/dev/null
+	pnpm run fmt:ci >/dev/null
+	info "Finished \`fmt\` check!"
 } &
 {
 	info "Running \`lint\` check..."
-	exec pnpm run lint:ci >/dev/null
+	pnpm run lint:ci >/dev/null
+	info "Finished \`lint\` check!"
 } &
 
 wait && info "Done!"
