@@ -3,11 +3,6 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
-"""
-The javascript `Date` as string. Type represents date and time as the ISO Date string.
-"""
-scalar DateTime
-
 """Overarching group model"""
 type Group {
   """Group ID"""
@@ -17,36 +12,34 @@ type Group {
   name: String!
 }
 
-"""Overarching message model"""
-type Message {
-  """Unique group identifier"""
-  groupId: String!
-
-  """Message ID"""
-  id: String!
-
-  """Message content"""
-  text: String!
-
-  """Time at which message was sent"""
-  timestamp: DateTime!
-
-  """Unique user identifier"""
-  userId: String!
-}
-
 type Mutation {
   createGroup(name: String!, password: String): Group!
-  joinGroup(id: String!, password: String): User!
+  joinGroup(id: String!, password: String): Group!
   login(email: String!, password: String!): User!
   removeGroup(groupId: String!, userId: String!): Group!
-  sendMessage(groupId: String!, text: String!, userId: String!): Message!
+  sendMessage(groupId: String!, text: String!): PubSubMessagePayload!
   signOut: Boolean!
   signUp(email: String!, name: String!, password: String!): User!
 }
 
+type PubSubMessagePayload {
+  group: Group!
+  id: String!
+  text: String!
+  timestamp: String!
+  user: PubSubMessagePayloadUser!
+}
+
+type PubSubMessagePayloadUser {
+  name: String!
+}
+
 type Query {
   groups: [Group!]!
+}
+
+type Subscription {
+  messageListen(groupId: String!): PubSubMessagePayload!
 }
 
 """Individual user"""

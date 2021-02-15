@@ -79,7 +79,7 @@ const Chat = () => {
 
 		setJoinLoading(true)
 		const group = await joinGroup({ id, password })
-		setLoading(false)
+		setJoinLoading(false)
 
 		if (group.error) {
 			toast({

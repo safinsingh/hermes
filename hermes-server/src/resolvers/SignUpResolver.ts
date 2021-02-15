@@ -6,9 +6,9 @@ import { argonSecret } from '../config'
 import { User } from '../generated/type-graphql'
 import { Context } from '../types'
 
-@Resolver((of) => User)
+@Resolver(() => User)
 export default class SignUpResolver {
-	@Mutation((returns) => User)
+	@Mutation(() => User)
 	public async signUp(
 		@Ctx() { prisma, req, res }: Context,
 		@Arg('email') email: string,

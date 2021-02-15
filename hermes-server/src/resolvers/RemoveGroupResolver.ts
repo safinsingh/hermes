@@ -3,9 +3,9 @@ import { Arg, Mutation, Resolver, Ctx } from 'type-graphql'
 import { User, Group } from '../generated/type-graphql'
 import { Context } from '../types'
 
-@Resolver((of) => User)
+@Resolver(() => User)
 export default class RemoveGroupResolver {
-	@Mutation((returns) => Group)
+	@Mutation(() => Group)
 	public async removeGroup(
 		@Ctx() { prisma }: Context,
 		@Arg('groupId') groupId: string,

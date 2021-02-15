@@ -6,9 +6,9 @@ import { argonSecret } from '../config'
 import { User } from '../generated/type-graphql'
 import { Context } from '../types'
 
-@Resolver((of) => User)
+@Resolver(() => User)
 export default class LoginResolver {
-	@Mutation((returns) => User)
+	@Mutation(() => User)
 	public async login(
 		@Ctx() { prisma, req, res }: Context,
 		@Arg('email') email: string,

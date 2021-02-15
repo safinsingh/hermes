@@ -5,10 +5,10 @@ import { argonSecret } from '../config'
 import { Group } from '../generated/type-graphql'
 import { Context } from '../types'
 
-@Resolver((of) => Group)
+@Resolver(() => Group)
 export default class CreateGroupResolver {
 	@Authorized()
-	@Mutation((returns) => Group)
+	@Mutation(() => Group)
 	public async createGroup(
 		@Ctx() { prisma, req: { userID } }: Context,
 		@Arg('name') name: string,

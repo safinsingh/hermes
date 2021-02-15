@@ -9,7 +9,9 @@
 		"emitDecoratorMetadata": true,
 		"noUnusedParameters": false,
 		"noEmit": false,
-		"typeRoots": ["./@types", "./node_modules/@types"]
+		"typeRoots": ["./@types", "./node_modules/@types"],
+		"strictFunctionTypes": true,
+		"strictBindCallApply": true
 	},
 	"include": ["src/**/*.ts"],
 	"exclude": ["dist/**"]

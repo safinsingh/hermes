@@ -1,39 +1,23 @@
-import type { Prisma } from '@prisma/client'
 import { ApolloError } from 'apollo-server-express'
-import { Mutation, Resolver, Ctx, Authorized, Arg } from 'type-graphql'
+import { PubSubEngine } from 'graphql-subscriptions'
+import { Mutation, Resolver, Ctx, Authorized, Arg, PubSub } from 'type-graphql'
 import { Message } from '../generated/type-graphql'
-import { Context } from '../types'
+import type { PubSubPayload } from '../types'
+import { Context, MessageSelection } from '../types'
+import { PubSubMessagePayload } from './MessageListenerResolver'
 
-const userSelection = {
-	select: {
-		group: {
-			select: {
-				name: true
-			}
-		},
-		id: true,
-		text: true,
-		timestamp: true,
-		user: {
-			select: {
-				name: true
-			}
-		}
-	}
-} as const
-
-@Resolver((of) => Message)
+@Resolver(() => Message)
 export default class SendMessageResolver {
 	@Authorized()
-	@Mutation((returns) => Message)
+	@Mutation(() => PubSubMessagePayload)
 	public async sendMessage(
-		@Ctx() { prisma }: Context,
+		@Ctx() { prisma, req: { userID } }: Context,
+		@PubSub() pubSub: PubSubEngine,
 		@Arg('text') text: string,
-		@Arg('userId') userId: string,
 		@Arg('groupId') groupId: string
-	): Promise<Prisma.MessageGetPayload<typeof userSelection>> {
+	): Promise<PubSubPayload<'message'>> {
 		const authed =
-			(await prisma.user.findUnique({ where: { id: userId } })) !== null
+			(await prisma.user.findUnique({ where: { id: userID } })) !== null
 		if (!authed)
 			throw new ApolloError(
 				"You don't have permission to send messages here!"
@@ -49,13 +33,14 @@ export default class SendMessageResolver {
 				text,
 				user: {
 					connect: {
-						id: userId
+						id: userID
 					}
 				}
 			},
-			...userSelection
+			...MessageSelection
 		})
 
+		await pubSub.publish(groupId, message)
 		return message
 	}
 }

@@ -3,12 +3,12 @@ import { ApolloError } from 'apollo-server-express'
 import * as argon2 from 'argon2'
 import { Arg, Mutation, Resolver, Ctx } from 'type-graphql'
 import { argonSecret } from '../config'
-import { User } from '../generated/type-graphql'
+import { User, Group } from '../generated/type-graphql'
 import { Context } from '../types'
 
-@Resolver((of) => User)
+@Resolver(() => User)
 export default class JoinGroupResolver {
-	@Mutation((returns) => User)
+	@Mutation(() => Group)
 	public async joinGroup(
 		@Ctx() { prisma, req: { userID } }: Context,
 		@Arg('id') id: string,

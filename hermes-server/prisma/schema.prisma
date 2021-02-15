@@ -39,10 +39,12 @@ model Message {
    /// Message content
    text      String
    /// Group in which the message was sent
+   /// @TypeGraphQL.omit(output: true)
    group     Group    @relation(fields: [groupId], references: [id])
    /// Unique group identifier
    groupId   String
    /// User who sent the message
+   /// @TypeGraphQL.omit(output: true)
    user      User     @relation(fields: [userId], references: [id])
    /// Unique user identifier
    userId    String

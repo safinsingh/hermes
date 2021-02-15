@@ -4,10 +4,10 @@ import { Query, Resolver, Ctx, Authorized } from 'type-graphql'
 import { Group, User } from '../generated/type-graphql'
 import { Context } from '../types'
 
-@Resolver((of) => User)
+@Resolver(() => User)
 export default class FindManyGroupResolver {
 	@Authorized()
-	@Query((returns) => [Group])
+	@Query(() => [Group])
 	public async groups(
 		@Ctx() { prisma, req }: Context
 	): Promise<
