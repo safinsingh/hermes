@@ -1,4 +1,4 @@
-# hermes
+# hermes ![build](https://github.com/safinsingh/hermes/workflows/build/badge.svg) ![fmt](https://github.com/safinsingh/hermes/workflows/fmt/badge.svg) ![lint](https://github.com/safinsingh/hermes/workflows/lint/badge.svg)
 
 `hermes` is a full-stack chat app powered by:
 
@@ -12,4 +12,4 @@
 - [RabbitMQ](https://www.rabbitmq.com/) (pubsub)
 - [urql](https://formidable.com/open-source/urql/) (GraphQL client)
 - [Next.js](https://nextjs.org/) (frontend framework)
-- [Chakra UI](chakra-ui.com/) (UI library).
+- [Chakra UI](chakra-ui.com/) (UI library)
