@@ -1,4 +1,4 @@
-name: CI
+name: fmt
 on:
   push:
     branches: [master]
