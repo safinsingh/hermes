@@ -4,7 +4,7 @@ importers:
       '@types/eslint': 7.2.6
       '@types/prettier': 2.2.1
       eslint: 7.20.0
-      eslint-config-canonical: 25.8.17_eslint@7.20.0
+      eslint-config-canonical: 25.9.0_eslint@7.20.0
       eslint-config-prettier: 7.2.0_eslint@7.20.0
       eslint-import-resolver-typescript: 2.3.0_eslint@7.20.0
       eslint-plugin-prettier: 3.3.1_90376326e593b529cca0740deb6f3b7f
@@ -14,7 +14,7 @@ importers:
       '@types/eslint': 7.2.6
       '@types/prettier': 2.2.1
       eslint: 7.20.0
-      eslint-config-canonical: 25.8.17
+      eslint-config-canonical: 25.9.0
       eslint-config-prettier: 7.2.0
       eslint-import-resolver-typescript: 2.3.0
       eslint-plugin-prettier: 3.3.1
@@ -371,13 +371,6 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-z7n7ybOUzaRc3wwqLpAX8UFIXsrVXUJhtNGBwAnLz6d1KUapqyq7ad2La8gZ6CXhHmGAIL32cop8Tst4/PNWLw==
-  /@babel/parser/7.12.15:
-    dev: true
-    engines:
-      node: '>=6.0.0'
-    hasBin: true
-    resolution:
-      integrity: sha512-AQBOU2Z9kWwSZMd6lNjCX0GUgFonL1wAM1db8L8PMk9UDaGsRCArBkU4Sc+UCM3AE4hjbXx+h58Lb3QT4oRmrA==
   /@babel/parser/7.12.16:
     dev: true
     engines:
@@ -3371,7 +3364,7 @@ packages:
   /babel-eslint/10.1.0_eslint@7.20.0:
     dependencies:
       '@babel/code-frame': 7.12.13
-      '@babel/parser': 7.12.15
+      '@babel/parser': 7.12.16
       '@babel/traverse': 7.12.13
       '@babel/types': 7.12.13
       eslint: 7.20.0
@@ -4703,7 +4696,7 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha512-otzzTim2/1+lVrlH19EfQQJEhVJSu0zOb9ygb3iapN6UlyaDtyRq4b5U1FuW0v1lRa9Fp/GJyHkSwm6NqABgCA==
-  /eslint-config-canonical/25.8.17_eslint@7.20.0:
+  /eslint-config-canonical/25.9.0_eslint@7.20.0:
     dependencies:
       '@babel/eslint-parser': 7.12.16_eslint@7.20.0
       '@typescript-eslint/eslint-plugin': 4.15.0_3d284fbfd72dee80211a015474bb836f
@@ -4736,7 +4729,7 @@ packages:
     peerDependencies:
       eslint: ^6.0.0 || ^7.0.0
     resolution:
-      integrity: sha512-eOzcYJhP8GYQ02rUkNZtdGkugWAxBetNK4LEVWTM3KuI0/y9QsoIWihpO8NpbNOu14Qsg+QuQ3y/1zA8we0p2g==
+      integrity: sha512-lWyMdBfM1zDaUBKDLsFKywQxWfkiJdkv4y+2pCguBaWcF4t4rP1K67C8eaUWhhWXLmSCQqbc8J4DTy+arxn1MQ==
   /eslint-config-prettier/7.2.0_eslint@7.20.0:
     dependencies:
       eslint: 7.20.0
