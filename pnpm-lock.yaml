@@ -6,7 +6,7 @@ importers:
       eslint: 7.20.0
       eslint-config-canonical: 25.8.17_eslint@7.20.0
       eslint-config-prettier: 7.2.0_eslint@7.20.0
-      eslint-import-resolver-typescript: 2.3.0_eslint@7.20.0
+      eslint-import-resolver-typescript: 2.4.0_eslint@7.20.0
       eslint-plugin-prettier: 3.3.1_90376326e593b529cca0740deb6f3b7f
       husky: 5.0.9
       prettier: 2.2.1
@@ -16,7 +16,7 @@ importers:
       eslint: 7.20.0
       eslint-config-canonical: 25.8.17
       eslint-config-prettier: 7.2.0
-      eslint-import-resolver-typescript: 2.3.0
+      eslint-import-resolver-typescript: 2.4.0
       eslint-plugin-prettier: 3.3.1
       husky: 5.0.9
       prettier: 2.2.1
@@ -4753,13 +4753,13 @@ packages:
     dev: true
     resolution:
       integrity: sha512-ogtf+5AB/O+nM6DIeBUNr2fuT7ot9Qg/1harBfBtaP13ekEWFQEEMP94BCB7zaNW3gyY+8SHYF00rnqYwXKWOA==
-  /eslint-import-resolver-typescript/2.3.0_eslint@7.20.0:
+  /eslint-import-resolver-typescript/2.4.0_eslint@7.20.0:
     dependencies:
       debug: 4.3.1
       eslint: 7.20.0
       glob: 7.1.6
       is-glob: 4.0.1
-      resolve: 1.19.0
+      resolve: 1.20.0
       tsconfig-paths: 3.9.0
     dev: true
     engines:
@@ -4768,7 +4768,7 @@ packages:
       eslint: '*'
       eslint-plugin-import: '*'
     resolution:
-      integrity: sha512-MHSXvmj5e0SGOOBhBbt7C+fWj1bJbtSYFAD85Xeg8nvUtuooTod2HQb8bfhE9f5QyyNxEfgzqOYFCvmdDIcCuw==
+      integrity: sha512-useJKURidCcldRLCNKWemr1fFQL1SzB3G4a0li6lFGvlc5xGe1hY343bvG07cbpCzPuM/lK19FIJB3XGFSkplA==
   /eslint-module-utils/2.6.0:
     dependencies:
       debug: 2.6.9
@@ -8660,13 +8660,6 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-+1lzwXehGCXSeryaISr6WujZzowloigEofRB+dj75y9RRa/obVcYgbHJd53tdYw8pvZj8GojXaaENws8Ktw/hQ==
-  /resolve/1.19.0:
-    dependencies:
-      is-core-module: 2.2.0
-      path-parse: 1.0.6
-    dev: true
-    resolution:
-      integrity: sha512-rArEXAgsBG4UgRGcynxWIWKFvh/XZCcS8UJdHhwy91zwAvCZIbcs+vAbflgBnNjYMs/i/i+/Ux6IZhML1yPvxg==
   /resolve/1.20.0:
     dependencies:
       is-core-module: 2.2.0
