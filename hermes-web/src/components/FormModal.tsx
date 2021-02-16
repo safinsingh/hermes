@@ -50,23 +50,21 @@ const FormModal = ({
 					<ModalCloseButton />
 					<form onSubmit={onSubmit}>
 						<Stack px={6} spacing={4}>
-							{fields.map((field) => {
-								return (
-									<FormControl id={field.id}>
-										<FormLabel>{field.name}</FormLabel>
-										<Input
-											name={field.id}
-											ref={register}
-											type={field.inputType ?? 'text'}
-										/>
-										{field.helperText && (
-											<FormHelperText>
-												{field.helperText}
-											</FormHelperText>
-										)}
-									</FormControl>
-								)
-							})}
+							{fields.map((field) => (
+								<FormControl id={field.id} key={field.id}>
+									<FormLabel>{field.name}</FormLabel>
+									<Input
+										name={field.id}
+										ref={register}
+										type={field.inputType ?? 'text'}
+									/>
+									{field.helperText && (
+										<FormHelperText>
+											{field.helperText}
+										</FormHelperText>
+									)}
+								</FormControl>
+							))}
 						</Stack>
 						<ModalFooter>
 							<Button
