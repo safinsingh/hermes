@@ -1,5 +1,4 @@
 import { AuthenticationError } from 'apollo-server-express'
-import type { AMQPPubSub } from 'graphql-amqp-subscriptions'
 import {
 	Subscription,
 	Resolver,
@@ -9,7 +8,8 @@ import {
 	Field
 } from 'type-graphql'
 import { Message, Group } from '../generated/type-graphql'
-import { PubSubPayload } from '../types'
+import type { Context } from '../types'
+import { MessageSelection, PubSubPayload } from '../types'
 
 @ObjectType()
 class PubSubMessagePayloadUser {
@@ -34,10 +34,7 @@ export default class MessageListenerResolver {
 	@Subscription(() => PubSubMessagePayload, {
 		nullable: true,
 		subscribe: (_, args, ctx) => {
-			const {
-				userGroups,
-				pubSub
-			}: { userGroups?: string[]; pubSub: AMQPPubSub } = ctx
+			const { userGroups, pubSub, prisma }: Context = ctx
 
 			args.groups.forEach((group: string) => {
 				if (!userGroups?.includes(group))
@@ -45,6 +42,22 @@ export default class MessageListenerResolver {
 						'You are not a part of this group!'
 					)
 			})
+
+			// uhhhhhhhhh
+			setTimeout(() => {
+				void Promise.all(
+					args.groups.map(async (group: string) => {
+						const lastMessage = await prisma.message.findMany({
+							take: -1,
+							where: { groupId: group },
+							...MessageSelection
+						})
+
+						if (lastMessage.length === 1)
+							await pubSub.publish(group, lastMessage[0])
+					})
+				)
+			}, 0)
 
 			return pubSub.asyncIterator(args.groups)
 		}

@@ -51,10 +51,11 @@ export const applyTokens = ({
 	req: Request
 	res: Response
 	user:
-		| Prisma.UserGetPayload<{
-				select: { id: true; count: true }
-		  }>
 		| User
+		| {
+				id: string
+				count: number
+		  }
 }) => {
 	const {
 		accessToken: newAccessToken,
