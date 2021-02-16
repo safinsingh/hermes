@@ -28,7 +28,6 @@ module.exports = {
 		{
 			files: ['./hermes-server/src/resolvers/*'],
 			rules: {
-				'@typescript-eslint/no-unused-vars': 'off',
 				'class-methods-use-this': 'off',
 				'fp/no-class': 'off'
 			}

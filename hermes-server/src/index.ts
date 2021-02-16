@@ -63,6 +63,7 @@ const main = async () => {
 	const apollo = new ApolloServer({
 		context: ({ req, res, connection }): Context => ({
 			prisma,
+			pubSub,
 			req,
 			res,
 			userGroups: connection?.context.userGroups
@@ -102,14 +103,6 @@ const main = async () => {
 			`🚀 Subscriptions ready at ws://localhost:${port}${apollo.subscriptionsPath}`
 		)
 	})
-
-	const exit = () => {
-		void Promise.all([prisma.$disconnect(), apollo.stop(), http.close()])
-	}
-
-	process.on('SIGINT', exit)
-	process.on('SIGQUIT', exit)
-	process.on('SIGTERM', exit)
 }
 
 main().catch(console.error)

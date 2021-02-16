@@ -1,11 +1,13 @@
 import type { PrismaClient, Prisma } from '@prisma/client'
 import type { Request, Response } from 'express'
+import type { AMQPPubSub } from 'graphql-amqp-subscriptions'
 
 export type Context = {
 	prisma: PrismaClient
 	req: Request
 	res: Response
 	userGroups?: string[]
+	pubSub: AMQPPubSub
 }
 
 export const MessageSelection = {

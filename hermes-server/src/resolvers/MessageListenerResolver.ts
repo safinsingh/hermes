@@ -1,15 +1,15 @@
-import { ApolloError } from 'apollo-server-express'
+import { AuthenticationError } from 'apollo-server-express'
+import type { AMQPPubSub } from 'graphql-amqp-subscriptions'
 import {
 	Subscription,
 	Resolver,
 	Root,
 	Arg,
 	ObjectType,
-	Field,
-	Ctx
+	Field
 } from 'type-graphql'
 import { Message, Group } from '../generated/type-graphql'
-import { PubSubPayload, Context } from '../types'
+import { PubSubPayload } from '../types'
 
 @ObjectType()
 class PubSubMessagePayloadUser {
@@ -32,16 +32,28 @@ export class PubSubMessagePayload {
 @Resolver(() => Message)
 export default class MessageListenerResolver {
 	@Subscription(() => PubSubMessagePayload, {
-		topics: ({ args }) => args.groups
+		nullable: true,
+		subscribe: (_, args, ctx) => {
+			const {
+				userGroups,
+				pubSub
+			}: { userGroups?: string[]; pubSub: AMQPPubSub } = ctx
+
+			args.groups.forEach((group: string) => {
+				if (!userGroups?.includes(group))
+					throw new AuthenticationError(
+						'You are not a part of this group!'
+					)
+			})
+
+			return pubSub.asyncIterator(args.groups)
+		}
 	})
 	public async messageListen(
 		@Root() payload: PubSubPayload<'message'>,
-		@Ctx() { userGroups }: Context,
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		@Arg('groups', () => [String]) groups: string[]
 	): Promise<PubSubPayload<'message'>> {
-		if (!userGroups?.includes(payload.group.id))
-			throw new ApolloError('You are not part of this group!')
-
 		return payload
 	}
 }
