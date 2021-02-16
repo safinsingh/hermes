@@ -1,14 +1,15 @@
+import { ApolloError } from 'apollo-server-express'
 import {
 	Subscription,
 	Resolver,
-	Authorized,
 	Root,
 	Arg,
 	ObjectType,
-	Field
+	Field,
+	Ctx
 } from 'type-graphql'
 import { Message, Group } from '../generated/type-graphql'
-import { PubSubPayload } from '../types'
+import { PubSubPayload, Context } from '../types'
 
 @ObjectType()
 class PubSubMessagePayloadUser {
@@ -31,12 +32,16 @@ export class PubSubMessagePayload {
 @Resolver(() => Message)
 export default class MessageListenerResolver {
 	@Subscription(() => PubSubMessagePayload, {
-		topics: ({ args }) => args.groupId
+		topics: ({ args }) => args.groups
 	})
-	public messageListen(
+	public async messageListen(
 		@Root() payload: PubSubPayload<'message'>,
-		@Arg('groupId') groupId: string
-	): PubSubPayload<'message'> {
+		@Ctx() { userGroups }: Context,
+		@Arg('groups', () => [String]) groups: string[]
+	): Promise<PubSubPayload<'message'>> {
+		if (!userGroups?.includes(payload.group.id))
+			throw new ApolloError('You are not part of this group!')
+
 		return payload
 	}
 }

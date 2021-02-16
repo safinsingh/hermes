@@ -39,7 +39,7 @@ type Query {
 }
 
 type Subscription {
-  messageListen(groupId: String!): PubSubMessagePayload!
+  messageListen(groups: [String!]!): PubSubMessagePayload!
 }
 
 """Individual user"""

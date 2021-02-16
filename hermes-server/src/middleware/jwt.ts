@@ -1,5 +1,7 @@
+import { parse as parseCookieRaw } from 'cookie'
 import type { Response, Request, NextFunction } from 'express'
 import * as jwt from 'jsonwebtoken'
+import type { ConnectionContext } from 'subscriptions-transport-ws'
 import { applyTokens } from '../auth'
 import { prisma, jwtSecret } from '../config'
 
@@ -45,4 +47,33 @@ export default () => {
 		req.userID = authenticatedID
 		return next()
 	}
+}
+
+export const wsVerify = async (context: ConnectionContext) => {
+	const { cookie } = context.request.headers
+	const authError =
+		"You must be authenticated to subscribe to a group's message"
+
+	if (!cookie) throw new Error(authError)
+	const { accessToken } = parseCookieRaw(cookie) as {
+		accessToken?: string
+	}
+	if (!accessToken) throw new Error(authError)
+
+	const { id } = jwt.verify(accessToken, jwtSecret) as {
+		id: string
+	}
+
+	const user = await prisma.user.findUnique({
+		include: {
+			groups: {
+				select: {
+					id: true
+				}
+			}
+		},
+		where: { id }
+	})
+
+	return { userGroups: user?.groups.map((group) => group.id) }
 }

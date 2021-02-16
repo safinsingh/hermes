@@ -12,7 +12,7 @@ import RedisStore from 'rate-limit-redis'
 import { buildSchema } from 'type-graphql'
 import { authChecker } from './auth'
 import { prisma, port, redisURL, amqpUri } from './config'
-import { jwt, logger } from './middleware'
+import { jwt, logger, wsVerify } from './middleware'
 import {
 	FindManyGroupResolver,
 	LoginResolver,
@@ -61,15 +61,23 @@ const main = async () => {
 	})
 
 	const apollo = new ApolloServer({
-		context: ({ req, res }): Context => ({ prisma, req, res }),
-		schema
+		context: ({ req, res, connection }): Context => ({
+			prisma,
+			req,
+			res,
+			userGroups: connection?.context.userGroups
+		}),
+		schema,
+		subscriptions: {
+			onConnect: async (_, __, context) => wsVerify(context)
+		}
 	})
 
 	const app = express()
-	app.use(cookieParser())
-	app.use(jwt())
 	app.use(logger())
 	app.use(limiter())
+	app.use(cookieParser())
+	app.use(jwt())
 
 	apollo.applyMiddleware({
 		app,
@@ -94,10 +102,14 @@ const main = async () => {
 			`🚀 Subscriptions ready at ws://localhost:${port}${apollo.subscriptionsPath}`
 		)
 	})
+
+	const exit = () => {
+		void Promise.all([prisma.$disconnect(), apollo.stop(), http.close()])
+	}
+
+	process.on('SIGINT', exit)
+	process.on('SIGQUIT', exit)
+	process.on('SIGTERM', exit)
 }
 
-main()
-	.catch(console.error)
-	.finally(() => {
-		void prisma.$disconnect()
-	})
+main().catch(console.error)

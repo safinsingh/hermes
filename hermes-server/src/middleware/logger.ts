@@ -8,7 +8,7 @@ const logBuilder = (msg: string) => {
 }
 
 export default () => {
-	return async (
+	return (
 		{ ip, path, method }: Request,
 		{ statusCode }: Response,
 		next: NextFunction
