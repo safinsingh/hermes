@@ -19,7 +19,7 @@
 		"next": "10.0.7",
 		"react": "17.0.1",
 		"react-dom": "17.0.1",
-		"react-hook-form": "6.15.1",
+		"react-hook-form": "6.15.2",
 		"subscriptions-transport-ws": "^0.9.18",
 		"urql": "2.0.1",
 		"ws": "^7.4.3"
