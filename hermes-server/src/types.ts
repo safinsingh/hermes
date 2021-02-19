@@ -1,4 +1,4 @@
-import type { PrismaClient, Prisma, Group } from '@prisma/client'
+import type { PrismaClient, Prisma } from '@prisma/client'
 import type { Request, Response } from 'express'
 import type { AMQPPubSub } from 'graphql-amqp-subscriptions'
 
