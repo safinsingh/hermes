@@ -41,6 +41,6 @@ export default class SendMessageResolver {
 		})
 
 		await pubSub.publish(groupId, message)
-		return { ...message, initial: false }
+		return message
 	}
 }
