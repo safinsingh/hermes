@@ -3,7 +3,7 @@
 </p>
 
 <h1 align="center">hermes</h1>
-<p align="center"><i>A full-stack Node.js ephemeral chat application</i></p>
+<p align="center"><i>✨ A full-stack ephemeral chat application built with Node.js</i></p>
 
 <p align="center">
   <img src="https://github.com/safinsingh/hermes/workflows/build/badge.svg" />
