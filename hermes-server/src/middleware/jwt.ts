@@ -4,6 +4,7 @@ import * as jwt from 'jsonwebtoken'
 import type { ConnectionContext } from 'subscriptions-transport-ws'
 import { applyTokens } from '../auth'
 import { prisma, jwtSecret } from '../config'
+import { MessageSelection } from '../types'
 
 export default () => {
 	return async (req: Request, res: Response, next: NextFunction) => {
@@ -51,8 +52,7 @@ export default () => {
 
 export const wsVerify = async (context: ConnectionContext) => {
 	const { cookie } = context.request.headers
-	const authError =
-		"You must be authenticated to subscribe to a group's message"
+	const authError = 'You must be authenticated to subscribe to messages'
 
 	if (!cookie) throw new Error(authError)
 	const { accessToken } = parseCookieRaw(cookie) as {
@@ -68,12 +68,16 @@ export const wsVerify = async (context: ConnectionContext) => {
 		include: {
 			groups: {
 				select: {
-					id: true
+					id: true,
+					messages: {
+						take: -1,
+						...MessageSelection
+					}
 				}
 			}
 		},
 		where: { id }
 	})
 
-	return { userGroups: user?.groups.map((group) => group.id) }
+	return { groups: user?.groups }
 }

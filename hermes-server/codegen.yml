@@ -1,7 +1,7 @@
 overwrite: true
 schema: 'http://localhost:4000/graphql'
 generates:
-  src/generated/urql/index.tsx:
+  src/generated/urql/index.ts:
     plugins:
       - 'typescript'
       - 'typescript-urql'

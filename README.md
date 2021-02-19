@@ -9,7 +9,7 @@
 - [Apollo Server](https://www.apollographql.com/) (GraphQL server)
 - [Express](https://www.npmjs.com/package/apollo-server-express) (WebSockets, middleware, JWT authentication)
 - [Redis](https://redis.io/) (rate limiting)
-- [RabbitMQ](https://www.rabbitmq.com/) (pubsub)
+- [RabbitMQ](https://www.rabbitmq.com/) (pushing message queue for pubsub)
 - [urql](https://formidable.com/open-source/urql/) (GraphQL client)
 - [Next.js](https://nextjs.org/) (frontend framework)
 - [Chakra UI](chakra-ui.com/) (UI library)

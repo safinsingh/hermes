@@ -1,4 +1,4 @@
-import type { PrismaClient, Prisma } from '@prisma/client'
+import type { PrismaClient, Prisma, Group } from '@prisma/client'
 import type { Request, Response } from 'express'
 import type { AMQPPubSub } from 'graphql-amqp-subscriptions'
 
@@ -6,8 +6,13 @@ export type Context = {
 	prisma: PrismaClient
 	req: Request
 	res: Response
-	userGroups?: string[]
 	pubSub: AMQPPubSub
+	wsContext: {
+		groups?: Array<{
+			id: string
+			messages: Array<Prisma.MessageGetPayload<typeof MessageSelection>>
+		}>
+	}
 }
 
 export const MessageSelection = {

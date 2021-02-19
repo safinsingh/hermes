@@ -7,9 +7,8 @@ import { Context } from '../types'
 export default class RemoveGroupResolver {
 	@Mutation(() => Group)
 	public async removeGroup(
-		@Ctx() { prisma }: Context,
-		@Arg('groupId') groupId: string,
-		@Arg('userId') userId: string
+		@Ctx() { prisma, req: { userID } }: Context,
+		@Arg('groupId') groupId: string
 	): Promise<
 		Prisma.GroupGetPayload<{
 			select: {
@@ -21,7 +20,7 @@ export default class RemoveGroupResolver {
 			data: {
 				users: {
 					disconnect: {
-						id: userId
+						id: userID
 					}
 				}
 			},

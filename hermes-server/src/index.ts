@@ -14,7 +14,6 @@ import { authChecker } from './auth'
 import { prisma, port, redisURL, amqpUri } from './config'
 import { jwt, logger, wsVerify } from './middleware'
 import {
-	FindManyGroupResolver,
 	LoginResolver,
 	SignUpResolver,
 	SignOutResolver,
@@ -22,7 +21,8 @@ import {
 	CreateGroupResolver,
 	JoinGroupResolver,
 	RemoveGroupResolver,
-	MessageListenerResolver
+	MessageListenerResolver,
+	DummyQuery
 } from './resolvers'
 import type { Context } from './types'
 
@@ -47,7 +47,6 @@ const main = async () => {
 		emitSchemaFile: join(__dirname, '../prisma/schema.generated.graphql'),
 		pubSub,
 		resolvers: [
-			FindManyGroupResolver,
 			LoginResolver,
 			SignUpResolver,
 			SignOutResolver,
@@ -55,7 +54,8 @@ const main = async () => {
 			CreateGroupResolver,
 			JoinGroupResolver,
 			RemoveGroupResolver,
-			MessageListenerResolver
+			MessageListenerResolver,
+			DummyQuery
 		],
 		validate: false
 	})
@@ -66,11 +66,11 @@ const main = async () => {
 			pubSub,
 			req,
 			res,
-			userGroups: connection?.context.userGroups
+			wsContext: connection?.context
 		}),
 		schema,
 		subscriptions: {
-			onConnect: async (_, __, context) => wsVerify(context)
+			onConnect: async (_, __, context) => await wsVerify(context)
 		}
 	})
 

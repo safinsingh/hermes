@@ -20,7 +20,13 @@ module.exports = {
 			}
 		},
 		{
-			files: ['\\.*\\.js', '*.d.ts', '*\\.config\\.js', '_*\\.tsx'],
+			files: [
+				'\\.*\\.js',
+				'*.d.ts',
+				'*\\.config\\.js',
+				'_*\\.tsx',
+				'\\[id\\]\\.tsx'
+			],
 			rules: {
 				'filenames/match-regex': 'off'
 			}

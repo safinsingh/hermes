@@ -27,7 +27,7 @@ const LoginMutation = gql`
 const LogIn = () => {
 	// eslint-disable-next-line @typescript-eslint/unbound-method
 	const { register, handleSubmit } = useForm()
-	const [, logIn] = useMutation<User, MutationLoginArgs, 'login'>(
+	const [, logIn] = useMutation<{ login: User }, MutationLoginArgs>(
 		LoginMutation
 	)
 	const [loading, setLoading] = useState(false)

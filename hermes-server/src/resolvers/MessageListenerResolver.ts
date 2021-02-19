@@ -1,15 +1,8 @@
-import { AuthenticationError } from 'apollo-server-express'
-import {
-	Subscription,
-	Resolver,
-	Root,
-	Arg,
-	ObjectType,
-	Field
-} from 'type-graphql'
+import { ApolloError } from 'apollo-server-express'
+import { Subscription, Resolver, Root, ObjectType, Field } from 'type-graphql'
 import { Message, Group } from '../generated/type-graphql'
 import type { Context } from '../types'
-import { MessageSelection, PubSubPayload } from '../types'
+import { PubSubPayload } from '../types'
 
 @ObjectType()
 class PubSubMessagePayloadUser {
@@ -27,45 +20,35 @@ export class PubSubMessagePayload {
 	@Field() public timestamp!: string
 
 	@Field() public user!: PubSubMessagePayloadUser
+
+	@Field() public initial!: boolean
 }
 
 @Resolver(() => Message)
 export default class MessageListenerResolver {
 	@Subscription(() => PubSubMessagePayload, {
 		nullable: true,
-		subscribe: (_, args, ctx) => {
-			const { userGroups, pubSub, prisma }: Context = ctx
+		subscribe: (_, __, ctx) => {
+			const {
+				wsContext: { groups },
+				pubSub
+			}: Context = ctx
 
-			args.groups.forEach((group: string) => {
-				if (!userGroups?.includes(group))
-					throw new AuthenticationError(
-						'You are not a part of this group!'
-					)
-			})
-
-			// uhhhhhhhhh
+			if (!groups) throw new ApolloError('Failed to resolve group!')
 			setTimeout(() => {
 				void Promise.all(
-					args.groups.map(async (group: string) => {
-						const lastMessage = await prisma.message.findMany({
-							take: -1,
-							where: { groupId: group },
-							...MessageSelection
-						})
-
-						if (lastMessage.length === 1)
-							await pubSub.publish(group, lastMessage[0])
+					groups.map(async ({ messages, id }) => {
+						if (messages.length === 1)
+							await pubSub.publish(id, messages[0])
 					})
 				)
 			}, 0)
 
-			return pubSub.asyncIterator(args.groups)
+			return pubSub.asyncIterator(groups.map((group) => group.id))
 		}
 	})
 	public async messageListen(
-		@Root() payload: PubSubPayload<'message'>,
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		@Arg('groups', () => [String]) groups: string[]
+		@Root() payload: PubSubPayload<'message'>
 	): Promise<PubSubPayload<'message'>> {
 		return payload
 	}
