@@ -8,39 +8,23 @@ import {
 	IconButton,
 	HStack,
 	VStack,
-	Text
+	Text,
+	Button
 } from '@chakra-ui/react'
-import gql from 'graphql-tag'
 import type {
 	Group,
 	MutationCreateGroupArgs,
 	MutationJoinGroupArgs,
 	MutationRemoveGroupArgs,
-	PubSubMessagePayload,
 	MutationSendMessageArgs
 } from 'hermes-server/dist/generated/urql'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useMutation, useSubscription } from 'urql'
+import { useMutation, gql } from 'urql'
 import { FormModal, Loading } from '~/components'
-
-const CHAT_SUBSCRIPTION = gql`
-	subscription {
-		messageListen {
-			group {
-				id
-				name
-			}
-			id
-			text
-			timestamp
-			user {
-				name
-			}
-		}
-	}
-`
+import useMessages from '~/hooks/useMessages'
+import useSignOut from '~/hooks/useSignOut'
 
 const CREATE_GROUP_MUTATION = gql`
 	mutation($name: String!, $password: String) {
@@ -86,22 +70,6 @@ const Chat = () => {
 		variant: 'solid'
 	})
 
-	const [messageStream] = useSubscription<
-		{ messageListen: PubSubMessagePayload },
-		{
-			[group: string]: Array<Partial<PubSubMessagePayload>>
-		},
-		{}
-	>({ query: CHAT_SUBSCRIPTION }, (prev = {}, event) => {
-		return {
-			...prev,
-			[`${event.messageListen.group.id}~${event.messageListen.group.name}`]: [
-				...(prev[event.messageListen.id] ?? []),
-				event.messageListen
-			]
-		}
-	})
-
 	const [, createGroup] = useMutation<
 		{ createGroup: Group },
 		MutationCreateGroupArgs
@@ -119,9 +87,10 @@ const Chat = () => {
 		MutationSendMessageArgs
 	>(POST_MESSAGE_MUTATION)
 
-	const { data, fetching, error } = messageStream
+	const { data, fetching, error } = useMessages()
 	const [loading, setLoading] = useState(false)
 	const [joinLoading, setJoinLoading] = useState(false)
+	const { loading: signOutLoading, signOut } = useSignOut()
 
 	const onJoinSubmit = async ({ id, password }: MutationJoinGroupArgs) => {
 		if (!id) {
@@ -198,7 +167,7 @@ const Chat = () => {
 		})
 
 	return (
-		<Container>
+		<Container pt="5.5rem">
 			<FormModal
 				action="Create"
 				buttonText="Create a group"
@@ -237,87 +206,80 @@ const Chat = () => {
 				onSubmit={handleJoinSubmit(onJoinSubmit)}
 				register={registerJoin}
 			/>
+			<Button
+				colorScheme="red"
+				isLoading={signOutLoading}
+				onClick={signOut}
+			>
+				Sign out
+			</Button>
 			{fetching ? (
 				<Loading />
 			) : (
-				Object.keys(data ?? {}).map((group) => (
-					<Flex
-						align="center"
-						borderRadius="lg"
-						borderWidth="1px"
-						justify="space-between"
-						key={group.split('~')[0]}
-						my="3"
-						p="6"
-					>
-						<VStack align="left">
-							<Text>{group.split('~')[1]}</Text>
-							<Text color="gray.500" fontSize="sm">
-								{new Date(
-									data[group][data[group].length - 1].timestamp ?? ''
-								).toLocaleTimeString()}
-								: {data[group][data[group].length - 1].text ?? ''}
-							</Text>
-						</VStack>
-						<HStack spacing="3">
-							<IconButton
-								aria-label="Go to group"
-								icon={<ChatIcon />}
-								onClick={async () => {
-									await router.push(`/group/${group.split('~')[0]}`)
-								}}
-							/>
-							<IconButton
-								aria-label="Share group link"
-								icon={<LinkIcon />}
-								onClick={async () => {
-									// TODO: change to actual url
-									await navigator.clipboard.writeText(
-										group.split('~')[0]
-									)
-									toast({
-										description: `Copied group ID to clipboard!`,
-										status: 'success',
-										title: `Success`
-									})
-								}}
-							/>
-							<IconButton
-								aria-label="Leave group"
-								icon={<CloseIcon />}
-								onClick={async () => {
-									toast({
-										description: `Removing you from group ${
-											group.split('~')[1]
-										}...`,
-										status: 'info',
-										title: 'Info'
-									})
-
-									const response = await removeGroup({
-										groupId: group.split('~')[0]
-									})
-
-									if (response.error) {
+				Object.entries(data ?? {}).map(
+					([id, { name, lastMessage }]) => (
+						<Flex
+							align="center"
+							borderRadius="lg"
+							borderWidth="1px"
+							justify="space-between"
+							key={id}
+							my="3"
+							p="6"
+						>
+							<VStack align="left">
+								<Text>{name}</Text>
+								{lastMessage && (
+									<Text color="gray.500" fontSize="sm">
+										{new Date(
+											lastMessage.timestamp
+										).toLocaleTimeString()}
+										: {lastMessage.text}
+									</Text>
+								)}
+							</VStack>
+							<HStack spacing="3">
+								<IconButton
+									aria-label="Go to group"
+									icon={<ChatIcon />}
+									onClick={async () => {
+										await router.push(`/group/${id}`)
+									}}
+								/>
+								<IconButton
+									aria-label="Share group ID"
+									icon={<LinkIcon />}
+									onClick={async () => {
+										await navigator.clipboard.writeText(id)
 										toast({
-											description: response.error.message,
-											status: 'error',
-											title: 'Error'
-										})
-									} else {
-										toast({
-											description: `Removed you from group ${
-												group.split('~')[1]
-											}!`,
+											description: `Copied group ID to clipboard!`,
 											status: 'success',
-											title: 'Success'
+											title: `Success`
 										})
-									}
-								}}
-							/>
-						</HStack>
-					</Flex>
-				))
+									}}
+								/>
+								<IconButton
+									aria-label="Leave group"
+									icon={<CloseIcon />}
+									onClick={async () => {
+										const response = await removeGroup({
+											groupId: id
+										})
+
+										if (response.error) {
+											toast({
+												description:
+													response.error.message,
+												status: 'error',
+												title: 'Error'
+											})
+										}
+									}}
+								/>
+							</HStack>
+						</Flex>
+					)
+				)
 			)}
 		</Container>
 	)

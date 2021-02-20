@@ -1,26 +1,14 @@
 import { Flex, chakra } from '@chakra-ui/react'
 import Link from 'next/link'
 
-const Navbar: React.FC<{
-	active: string | '/' | '/chat' | '/login' | '/signup'
-}> = ({ active }) => (
+const Navbar = () => (
 	<Flex
 		align="center"
 		// eslint-disable-next-line react/forbid-component-props
 		className="blur-white"
+		h="5.5rem"
 		justify="center"
-		mb={3}
-		position={
-			active === '/chat' ||
-			!(
-				active === '/' ||
-				active === '/chat' ||
-				active === '/login' ||
-				active === '/signup'
-			)
-				? 'sticky'
-				: 'absolute'
-		}
+		position={'fixed'}
 		px={['4', '6']}
 		py={['4', '6']}
 		top={0}

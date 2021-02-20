@@ -67,6 +67,7 @@ const LogIn = () => {
 				title: `Welcome${firstName && `, ${firstName}`}!`
 			})
 
+			localStorage.setItem('myID', user.data.login.id)
 			await router.push('/chat')
 		}
 	}

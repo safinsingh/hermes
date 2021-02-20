@@ -106,9 +106,9 @@ importers:
       '@chakra-ui/react': 1.3.3_c462d6130e340146b4f8475324c5c72f
       '@emotion/react': 11.1.5_@types+react@17.0.2+react@17.0.1
       '@emotion/styled': 11.1.5_a444bc1706cb5f754e69bc6eb4e89491
+      '@urql/devtools': 2.0.3_graphql@15.5.0
       framer-motion: 3.5.2_react-dom@17.0.1+react@17.0.1
       graphql: 15.5.0
-      graphql-tag: 2.11.0_graphql@15.5.0
       isomorphic-ws: 4.0.1_ws@7.4.3
       next: 10.0.7_bdba1ca4a80d13560ab4ce49959c6ea2
       react: 17.0.1
@@ -129,9 +129,9 @@ importers:
       '@emotion/styled': 11.1.5
       '@types/node': 14.14.30
       '@types/react': 17.0.2
+      '@urql/devtools': ^2.0.3
       framer-motion: 3.5.2
       graphql: 15.5.0
-      graphql-tag: 2.11.0
       hermes-server: workspace:^1.0.0
       isomorphic-ws: 4.0.1
       next: 10.0.7
@@ -2821,6 +2821,16 @@ packages:
       graphql: ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0
     resolution:
       integrity: sha512-Qj24CG8ullqZZsYmjrSH0JhH+nY7kj8GbVbA9si3KUjlYs75A/MBQU3i97j6oWyGldDBapyis2CfaQeXKbv8rA==
+  /@urql/devtools/2.0.3_graphql@15.5.0:
+    dependencies:
+      graphql: 15.5.0
+      wonka: 4.0.15
+    dev: false
+    peerDependencies:
+      '@urql/core': '>= 1.14.0'
+      graphql: '>= 0.11.0'
+    resolution:
+      integrity: sha512-TktPLiBS9LcBPHD6qcnb8wqOVcg3Bx0iCtvQ80uPpfofwwBGJmqnQTjUdEFU6kwaLOFZULQ9+Uo4831G823mQw==
   /@wry/equality/0.1.11:
     dependencies:
       tslib: 1.14.1

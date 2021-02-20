@@ -1,13 +1,13 @@
 // eslint-disable-next-line import/no-unassigned-import
 import '~/styles/globals.css'
 import { ChakraProvider } from '@chakra-ui/react'
+import { devtoolsExchange } from '@urql/devtools'
 import ws from 'isomorphic-ws'
-import { useRouter } from 'next/router'
 import { SubscriptionClient } from 'subscriptions-transport-ws'
 import {
 	createClient,
 	Provider,
-	defaultExchanges,
+	fetchExchange,
 	dedupExchange,
 	subscriptionExchange
 } from 'urql'
@@ -19,10 +19,12 @@ const subscriptionClient = new SubscriptionClient(
 	{ reconnect: true },
 	ws
 )
+
 const client = createClient({
 	exchanges: [
-		...defaultExchanges,
+		devtoolsExchange,
 		dedupExchange,
+		fetchExchange,
 		subscriptionExchange({
 			forwardSubscription: (op) => {
 				return subscriptionClient.request(op)
@@ -36,21 +38,13 @@ const client = createClient({
 	url: 'http://localhost:4000/graphql'
 })
 
-const App = ({ Component, pageProps }) => {
-	const { pathname } = useRouter()
-
-	return (
-		<Provider value={client}>
-			<ChakraProvider theme={customTheme}>
-				<Navbar
-					active={
-						pathname as string | '/' | '/chat' | '/login' | '/signup'
-					}
-				/>
-				<Component {...pageProps} />
-			</ChakraProvider>
-		</Provider>
-	)
-}
+const App = ({ Component, pageProps }) => (
+	<Provider value={client}>
+		<ChakraProvider theme={customTheme}>
+			<Navbar />
+			<Component {...pageProps} />
+		</ChakraProvider>
+	</Provider>
+)
 
 export default App

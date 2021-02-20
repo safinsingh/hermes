@@ -7,35 +7,17 @@ import {
 	Text,
 	useToast,
 	Flex,
-	Input
+	Input,
+	chakra
 } from '@chakra-ui/react'
 import gql from 'graphql-tag'
-import type {
-	MutationSendMessageArgs,
-	PubSubMessagePayload
-} from 'hermes-server/dist/generated/urql'
+import type { MutationSendMessageArgs } from 'hermes-server/dist/generated/urql'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useMutation, useSubscription } from 'urql'
+import { useMutation } from 'urql'
 import { Loading } from '~/components'
-
-const CHAT_SUBSCRIPTION = gql`
-	subscription {
-		messageListen {
-			group {
-				id
-				name
-			}
-			id
-			text
-			timestamp
-			user {
-				name
-			}
-		}
-	}
-`
+import useMessages from '~/hooks/useMessages'
 
 const POST_MESSAGE_MUTATION = gql`
 	mutation($text: String!, $groupId: String!) {
@@ -50,24 +32,17 @@ const GroupPage = () => {
 	const id = router.query.id as string
 	const [loading, setLoading] = useState(false)
 	const { register, handleSubmit, reset } = useForm()
+	const messageStream = useMessages()
+	const [me, setMe] = useState<string | undefined>(undefined)
+
+	useEffect(() => {
+		setMe(localStorage.getItem('myID'))
+	}, [])
 
 	const toast = useToast({
 		isClosable: true,
 		position: 'top-right',
 		variant: 'solid'
-	})
-
-	const [messageStream] = useSubscription<
-		{ messageListen: PubSubMessagePayload },
-		PubSubMessagePayload[],
-		{}
-	>({ query: CHAT_SUBSCRIPTION }, (prev = [], event) => {
-		if (
-			event.messageListen.group.id === id &&
-			prev[prev.length - 1]?.id !== event.messageListen.id
-		)
-			return [...prev, event.messageListen]
-		return prev
 	})
 
 	const [, sendMessage] = useMutation<
@@ -102,37 +77,37 @@ const GroupPage = () => {
 		})
 
 	return (
-		<Container height="100%" position="relative">
-			<form onSubmit={handleSubmit(onSubmit)}>
+		<Container pt="5.5rem">
+			<chakra.div h="calc(100vh - 5.5rem - 3.5rem)" overflow="hidden">
+				{data[id].messages.map((msg) => (
+					<Flex
+						align="left"
+						borderRadius="lg"
+						borderWidth="1px"
+						key={msg.id}
+						my="3"
+						p="6"
+					>
+						<Avatar mr={4} name={msg.user.name} />
+						<Box>
+							<Text>{msg.text}</Text>
+							<Text color="gray.500" fontSize="sm">
+								{new Date(msg.timestamp).toLocaleTimeString()}
+							</Text>
+						</Box>
+					</Flex>
+				))}
+			</chakra.div>
+			<chakra.form h="2.5rem" mb={4} onSubmit={handleSubmit(onSubmit)}>
 				<Input
+					bg="white"
 					disabled={loading}
 					name="text"
-					placeholder="Send message"
+					placeholder="Send message ↵"
 					ref={register}
 					type="text"
-					w="100%"
 				/>
-				<div style={{ overflow: 'auto' }}>
-					{data.map((msg) => (
-						<Flex
-							align="left"
-							borderRadius="lg"
-							borderWidth="1px"
-							key={msg.id}
-							my="3"
-							p="6"
-						>
-							<Avatar mr={4} name={msg.user.name} />
-							<Box>
-								<Text>{msg.text}</Text>
-								<Text color="gray.500" fontSize="sm">
-									{new Date(msg.timestamp).toLocaleTimeString()}
-								</Text>
-							</Box>
-						</Flex>
-					))}
-				</div>
-			</form>
+			</chakra.form>
 		</Container>
 	)
 }

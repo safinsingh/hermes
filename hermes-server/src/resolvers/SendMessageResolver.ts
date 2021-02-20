@@ -19,9 +19,7 @@ export default class SendMessageResolver {
 		const authed =
 			(await prisma.user.findUnique({ where: { id: userID } })) !== null
 		if (!authed)
-			throw new ApolloError(
-				"You don't have permission to send messages here!"
-			)
+			throw new ApolloError("You don't have permission to send messages here!")
 
 		const message = await prisma.message.create({
 			data: {

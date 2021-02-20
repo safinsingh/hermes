@@ -10,6 +10,7 @@ export type Context = {
 	wsContext: {
 		groups?: Array<{
 			id: string
+			name: string
 			messages: Array<Prisma.MessageGetPayload<typeof MessageSelection>>
 		}>
 	}

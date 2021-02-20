@@ -76,7 +76,6 @@ const main = async () => {
 
 	const app = express()
 	app.use(logger())
-	app.use(limiter())
 	app.use(cookieParser())
 	app.use(jwt())
 
@@ -84,11 +83,7 @@ const main = async () => {
 		app,
 		cors: {
 			credentials: true,
-			origin: [
-				'http://localhost:3000',
-				'ws://localhost:4000',
-				'http://localhost:4000'
-			]
+			origin: ['http://localhost:3000', 'ws://localhost:4000']
 		}
 	})
 

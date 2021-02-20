@@ -40,7 +40,7 @@ type Query {
 }
 
 type Subscription {
-  messageListen: PubSubMessagePayload
+  messageListen: PubSubMessagePayload!
 }
 
 """Individual user"""

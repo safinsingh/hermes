@@ -72,7 +72,8 @@ export const wsVerify = async (context: ConnectionContext) => {
 					messages: {
 						take: -1,
 						...MessageSelection
-					}
+					},
+					name: true
 				}
 			}
 		},

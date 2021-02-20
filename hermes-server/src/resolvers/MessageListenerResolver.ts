@@ -27,7 +27,6 @@ export class PubSubMessagePayload {
 @Resolver(() => Message)
 export default class MessageListenerResolver {
 	@Subscription(() => PubSubMessagePayload, {
-		nullable: true,
 		subscribe: (_, __, ctx) => {
 			const {
 				wsContext: { groups },
@@ -38,8 +37,7 @@ export default class MessageListenerResolver {
 			setTimeout(() => {
 				void Promise.all(
 					groups.map(async ({ messages, id }) => {
-						if (messages.length === 1)
-							await pubSub.publish(id, messages[0])
+						if (messages.length === 1) await pubSub.publish(id, messages[0])
 					})
 				)
 			}, 0)
