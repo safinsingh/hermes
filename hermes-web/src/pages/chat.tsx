@@ -206,80 +206,71 @@ const Chat = () => {
 				onSubmit={handleJoinSubmit(onJoinSubmit)}
 				register={registerJoin}
 			/>
-			<Button
-				colorScheme="red"
-				isLoading={signOutLoading}
-				onClick={signOut}
-			>
+			<Button colorScheme="red" isLoading={signOutLoading} onClick={signOut}>
 				Sign out
 			</Button>
 			{fetching ? (
 				<Loading />
 			) : (
-				Object.entries(data ?? {}).map(
-					([id, { name, lastMessage }]) => (
-						<Flex
-							align="center"
-							borderRadius="lg"
-							borderWidth="1px"
-							justify="space-between"
-							key={id}
-							my="3"
-							p="6"
-						>
-							<VStack align="left">
-								<Text>{name}</Text>
-								{lastMessage && (
-									<Text color="gray.500" fontSize="sm">
-										{new Date(
-											lastMessage.timestamp
-										).toLocaleTimeString()}
-										: {lastMessage.text}
-									</Text>
-								)}
-							</VStack>
-							<HStack spacing="3">
-								<IconButton
-									aria-label="Go to group"
-									icon={<ChatIcon />}
-									onClick={async () => {
-										await router.push(`/group/${id}`)
-									}}
-								/>
-								<IconButton
-									aria-label="Share group ID"
-									icon={<LinkIcon />}
-									onClick={async () => {
-										await navigator.clipboard.writeText(id)
-										toast({
-											description: `Copied group ID to clipboard!`,
-											status: 'success',
-											title: `Success`
-										})
-									}}
-								/>
-								<IconButton
-									aria-label="Leave group"
-									icon={<CloseIcon />}
-									onClick={async () => {
-										const response = await removeGroup({
-											groupId: id
-										})
+				Object.entries(data ?? {}).map(([id, { name, lastMessage }]) => (
+					<Flex
+						align="center"
+						borderRadius="lg"
+						borderWidth="1px"
+						justify="space-between"
+						key={id}
+						my="3"
+						p="6"
+					>
+						<VStack align="left">
+							<Text>{name}</Text>
+							{lastMessage && (
+								<Text color="gray.500" fontSize="sm">
+									{new Date(lastMessage.timestamp).toLocaleTimeString()}:{' '}
+									{lastMessage.text}
+								</Text>
+							)}
+						</VStack>
+						<HStack spacing="3">
+							<IconButton
+								aria-label="Go to group"
+								icon={<ChatIcon />}
+								onClick={async () => {
+									await router.push(`/group/${id}`)
+								}}
+							/>
+							<IconButton
+								aria-label="Share group ID"
+								icon={<LinkIcon />}
+								onClick={async () => {
+									await navigator.clipboard.writeText(id)
+									toast({
+										description: `Copied group ID to clipboard!`,
+										status: 'success',
+										title: `Success`
+									})
+								}}
+							/>
+							<IconButton
+								aria-label="Leave group"
+								icon={<CloseIcon />}
+								onClick={async () => {
+									const response = await removeGroup({
+										groupId: id
+									})
 
-										if (response.error) {
-											toast({
-												description:
-													response.error.message,
-												status: 'error',
-												title: 'Error'
-											})
-										}
-									}}
-								/>
-							</HStack>
-						</Flex>
-					)
-				)
+									if (response.error) {
+										toast({
+											description: response.error.message,
+											status: 'error',
+											title: 'Error'
+										})
+									}
+								}}
+							/>
+						</HStack>
+					</Flex>
+				))
 			)}
 		</Container>
 	)

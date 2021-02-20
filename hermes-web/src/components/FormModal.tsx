@@ -59,9 +59,7 @@ const FormModal = ({
 										type={field.inputType ?? 'text'}
 									/>
 									{field.helperText && (
-										<FormHelperText>
-											{field.helperText}
-										</FormHelperText>
+										<FormHelperText>{field.helperText}</FormHelperText>
 									)}
 								</FormControl>
 							))}

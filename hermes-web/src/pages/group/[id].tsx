@@ -33,7 +33,7 @@ const GroupPage = () => {
 	const [loading, setLoading] = useState(false)
 	const { register, handleSubmit, reset } = useForm()
 	const messageStream = useMessages()
-	const [me, setMe] = useState<string | undefined>(undefined)
+	const [, setMe] = useState<string | undefined>(undefined)
 
 	useEffect(() => {
 		setMe(localStorage.getItem('myID'))

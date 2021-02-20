@@ -76,6 +76,7 @@ const main = async () => {
 
 	const app = express()
 	app.use(logger())
+	app.use(limiter())
 	app.use(cookieParser())
 	app.use(jwt())
 
