@@ -8,7 +8,7 @@ importers:
       eslint-config-prettier: 7.2.0_eslint@7.21.0
       eslint-import-resolver-typescript: 2.4.0_eslint@7.21.0
       eslint-plugin-prettier: 3.3.1_89e7f0daad470a5602ab49dfc5447533
-      husky: 5.1.1
+      husky: 5.1.2
       prettier: 2.2.1
     specifiers:
       '@types/eslint': 7.2.6
@@ -18,7 +18,7 @@ importers:
       eslint-config-prettier: 7.2.0
       eslint-import-resolver-typescript: 2.4.0
       eslint-plugin-prettier: 3.3.1
-      husky: 5.1.1
+      husky: 5.1.2
       prettier: 2.2.1
   hermes-server:
     dependencies:
@@ -6131,13 +6131,13 @@ packages:
       node: '>=10.17.0'
     resolution:
       integrity: sha512-B4FFZ6q/T2jhhksgkbEW3HBvWIfDW85snkQgawt07S7J5QXTk6BkNV+0yAeZrM5QpMAdYlocGoljn0sJ/WQkFw==
-  /husky/5.1.1:
+  /husky/5.1.2:
     dev: true
     engines:
       node: '>= 10'
     hasBin: true
     resolution:
-      integrity: sha512-80LZ736V0Nr4/st0c2COYaMbEQhHNmAbLMN8J/kLk7/mo0QdUkUGNDjv/7jVkhug377Wh8wfbWyaVXEJ/h2B/Q==
+      integrity: sha512-lilaRYeDXcAOj8DuRnN9IxUyEMVbYg9rK7yVNkPB5V4hCvxIUxpMeiv9K2h77CE0HzjCnk1Br0oWe1IghXngDQ==
   /iconv-lite/0.4.24:
     dependencies:
       safer-buffer: 2.1.2
