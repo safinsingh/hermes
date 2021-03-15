@@ -2,7 +2,7 @@ importers:
   .:
     devDependencies:
       '@types/eslint': 7.2.7
-      '@types/prettier': 2.2.2
+      '@types/prettier': 2.2.3
       eslint: 7.22.0
       eslint-config-canonical: 25.9.0_eslint@7.22.0
       eslint-config-prettier: 7.2.0_eslint@7.22.0
@@ -12,7 +12,7 @@ importers:
       prettier: 2.2.1
     specifiers:
       '@types/eslint': 7.2.7
-      '@types/prettier': 2.2.2
+      '@types/prettier': 2.2.3
       eslint: 7.22.0
       eslint-config-canonical: 25.9.0
       eslint-config-prettier: 7.2.0
@@ -2638,10 +2638,10 @@ packages:
   /@types/parse-json/4.0.0:
     resolution:
       integrity: sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==
-  /@types/prettier/2.2.2:
+  /@types/prettier/2.2.3:
     dev: true
     resolution:
-      integrity: sha512-i99hy7Ki19EqVOl77WplDrvgNugHnsSjECVR/wUrzw2TJXz1zlUfT2ngGckR6xN7yFYaijsMAqPkOLx9HgUqHg==
+      integrity: sha512-PijRCG/K3s3w1We6ynUKdxEc5AcuuH3NBmMDP8uvKVp6X43UY7NQlTzczakXP3DJR0F4dfNQIGjU2cUeRYs2AA==
   /@types/prop-types/15.7.3:
     resolution:
       integrity: sha512-KfRL3PuHmqQLOG+2tGpRO26Ctg+Cq1E01D2DMriKEATHgWLfeNDmq9e29Q9WIky0dQ3NPkd1mzYH8Lm936Z9qw==
